@@ -1,0 +1,257 @@
+.container1 {
+  background-color: black;
+  min-height: 70vh;
+  padding: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Geistmono", monospace;
+}
+
+.headings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  width: 90%;
+}
+
+.heading {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px; /* spacing between buttons */
+}
+
+.exportBtn, .newTaskBtn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.exportBtn {
+  background-color: #f1f5f9;
+  color: #333;
+}
+
+.newTaskBtn {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+
+.projects {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.card {
+  background-color: #1b1d1f;
+  padding: 20px;
+  border-radius: 12px;
+  width: 43%;
+  height: 330px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.status {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+}
+
+.running {
+  background-color: #1a936f;
+}
+
+.stopped {
+  background-color: #b23a48;
+}
+
+.desc {
+  font-size: 14px;
+  color: #ccc;
+}
+
+.phase {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  align-items: center;
+}
+
+.phaseTag {
+  padding: 5px 12px;
+  border-radius: 16px;
+  font-size: 12px;
+}
+
+.devPhase {
+  background-color: #e07a5f;
+}
+
+.testPhase {
+  background-color: #808080;
+}
+
+.progressBar {
+  height: 8px;
+  background: #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background-color: teal;
+}
+
+.usage {
+  font-size: 12px;
+}
+
+.usageBar {
+  height: 6px;
+  background: #444;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 2px 0 8px 0;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.detailsBtn {
+  background: #f1f1f1;
+  color: black;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.actionBtn {
+  background: teal;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.container2 {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  background-color: black;
+  min-height: 70vh;
+  align-items: center;
+  justify-content: center;
+  font-family: "Geistmono", monospace;
+}
+
+.cards {
+  width: 20.5%;
+  background-color: #1b1d1f;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: white;
+  min-height: 65vh;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.count {
+  background: #2d2f31;
+  color: #ddd;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 50%;
+}
+
+.task {
+  background-color: #2a2d2f;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  min-height: 80px;
+  gap: 6px;
+}
+
+.task h3 {
+  font-size: 14px;
+  margin: 0;
+  color: #fff;
+}
+
+.task p {
+  font-size: 12px;
+  color: #aaa;
+  margin: 0;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between !important;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.sp {
+  background: teal;
+  color: white;
+  font-size: 12px;
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+}
+
+.name {
+  font-size: 12px;
+  color: #ddd;
+}
+
+

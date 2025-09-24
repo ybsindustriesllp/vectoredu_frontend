@@ -1,0 +1,98 @@
+:root {
+  --nav-bg: #1b1d1f;          
+  --nav-hover: #26292d;       
+  --active-bg: #2a1637;      
+  --accent: #9d3795;          
+  --border-light: #eee;      
+  --text-color: #ffffff;     
+  --font-family: "Geistmono", monospace;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--nav-bg);
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0.75rem 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+  color: var(--accent);
+}
+
+.title {
+  cursor: pointer;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s, border-color 0.3s;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.link:hover {
+  background-color: var(--nav-hover);
+}
+
+.active {
+  background-color: var(--active-bg);
+  border: 1px solid var(--accent);
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-right: 2%;
+}
+
+.notification {
+  position: relative;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: white;
+  padding-right: 1rem;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: 10px;
+  background: #b91c1c; 
+  color: white;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 6px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.username {
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+}

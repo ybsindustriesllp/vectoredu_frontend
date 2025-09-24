@@ -1,0 +1,8 @@
+{
+  "name": "VM Session",
+  "short_name": "VM",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

@@ -1,0 +1,383 @@
+
+.mentorship-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: black;
+  font-family: "Giestmono", monospace;
+  color: #e6e6e6;
+}
+
+.mentorship-content {
+  flex: 1;
+  padding: 2rem 3rem;
+  margin-top: 20px;
+}
+
+.view-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 0 10px;
+}
+
+.view-header h1 {
+  color: #fff;
+  margin: 0;
+  font-size: 2rem;
+}
+
+/* Main cards container with row flow */
+.cards-container {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 20px;
+  justify-content: flex-start;
+}
+
+/* Card Styles */
+.card {
+  background-color: #1a1a1a;
+  border-radius: 16px;
+  border: 1px solid #333;
+  overflow: hidden;
+  width: 450px; /* Fixed width */
+  height: 250px; /* Fixed height */
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto; /* Prevent cards from growing or shrinking */
+}
+
+.card__body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  font-size: 13px;
+  gap: 6px;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, #9d3795, #b34caa);
+  color: white;
+}
+
+.btn--primary:hover {
+  background: linear-gradient(135deg, #8c2a85, #9d3795);
+  transform: translateY(-2px);
+}
+
+.btn--outline {
+  background: transparent;
+  color: #9d3795;
+  border: 1px solid #9d3795;
+}
+
+.btn--outline:hover {
+  background-color: rgba(157, 55, 149, 0.1);
+}
+
+.btn--sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+/* Mentor Card */
+.mentor-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.mentor-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 12px;
+  border: 2px solid #9d3795;
+}
+
+.mentor-info h3 {
+  margin: 0 0 4px 0;
+  color: #fff;
+  font-size: 1.1rem;
+}
+
+.mentor-info p {
+  margin: 0 0 8px 0;
+  color: #ccc;
+  font-size: 0.85rem;
+}
+
+.mentor-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating {
+  font-weight: bold;
+  color: #ffc107;
+  font-size: 1rem;
+}
+
+.stars {
+  color: #ffc107;
+  font-size: 0.9rem;
+}
+
+.mentor-stats {
+  color: #ccc;
+  margin: 12px 0;
+  font-size: 0.8rem;
+}
+
+.mentor-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 12px 0;
+}
+
+.skill-tag {
+  background-color: #333;
+  color: #e6e6e6;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+}
+
+.mentor-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto; /* Push buttons to bottom of card */
+}
+
+/* Updated Sessions Styles */
+.sessions-scroll-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 6px;
+  margin-bottom: 8px;
+}
+
+/* Scrollbar styling */
+.sessions-scroll-container::-webkit-scrollbar,
+.feedback-scroll-container::-webkit-scrollbar,
+.goals-scroll-container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sessions-scroll-container::-webkit-scrollbar-track,
+.feedback-scroll-container::-webkit-scrollbar-track,
+.goals-scroll-container::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 8px;
+}
+
+.sessions-scroll-container::-webkit-scrollbar-thumb,
+.feedback-scroll-container::-webkit-scrollbar-thumb,
+.goals-scroll-container::-webkit-scrollbar-thumb {
+  background: #9d3795;
+  border-radius: 8px;
+}
+
+.sessions-scroll-container::-webkit-scrollbar-thumb:hover,
+.feedback-scroll-container::-webkit-scrollbar-thumb:hover,
+.goals-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #8c2a85;
+}
+
+.session-item {
+  background-color: #2a2a2a;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.session-info h4 {
+  color: #fff;
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.session-info p {
+  color: #ccc;
+  font-size: 0.8rem;
+  margin: 4px 0 0 0;
+}
+
+.session-time {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.session-time strong {
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.session-time span {
+  color: #ccc;
+  font-size: 0.75rem;
+}
+
+.session-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* Feedback */
+.feedback-scroll-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.feedback-item {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #333;
+}
+
+.feedback-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.feedback-header strong {
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.feedback-date {
+  color: #ccc;
+  font-size: 0.75rem;
+}
+
+.feedback-item p {
+  margin: 0 0 8px 0;
+  color: #e6e6e6;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+.feedback-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #ccc;
+  font-size: 0.75rem;
+}
+
+/* Goals */
+.goals-scroll-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-bottom: 8px;
+}
+
+.goal-item {
+  background-color: #2a2a2a;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #333;
+}
+
+.goal-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.goal-info strong {
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.goal-info span {
+  color: #ccc;
+  font-size: 0.75rem;
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #333;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(135deg, #9d3795, #b34caa);
+  border-radius: 3px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cards-container {
+    justify-content: center;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    min-height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .view-header {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+  }
+  
+  .mentor-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .mentor-avatar {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  
+  .session-actions {
+    flex-direction: column;
+  }
+}

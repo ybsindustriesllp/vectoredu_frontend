@@ -1,0 +1,16 @@
+/* src/components/GoogleOAuth/GoogleOAuth.module.css */
+.googleAuthContainer {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.googleAuthContainer > div {
+  width: 100% !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.googleAuthContainer iframe {
+  margin: 0 auto !important;
+}
