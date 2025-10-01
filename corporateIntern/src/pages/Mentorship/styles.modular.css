@@ -3,9 +3,9 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: black;
-  font-family: "Giestmono", monospace;
-  color: #e6e6e6;
+  background-color: #f8fafc;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #000000;
 }
 
 .mentorship-content {
@@ -23,30 +23,68 @@
 }
 
 .view-header h1 {
-  color: #fff;
+  color: #000000;
   margin: 0;
   font-size: 2rem;
 }
 
-/* Main cards container with row flow */
+/* Main cards container with 3-column grid */
 .cards-container {
-  display: flex;
-  flex-flow: row wrap;
-  gap: 20px;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Add margin between rows */
+.cards-container:not(:last-child) {
+  margin-bottom: 24px;
 }
 
 /* Card Styles */
 .card {
-  background-color: #1a1a1a;
+  background-color: #ffffff;
   border-radius: 16px;
-  border: 1px solid #333;
+  border: 1px solid #e5e7eb;
   overflow: hidden;
-  width: 450px; /* Fixed width */
-  height: 250px; /* Fixed height */
   display: flex;
   flex-direction: column;
-  flex: 0 0 auto; /* Prevent cards from growing or shrinking */
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  border-color: #6366f1;
+  box-shadow: 0 6px 15px rgba(99, 102, 241, 0.4);
+}
+
+/* Goals card specific styling for consistent width */
+.goals-card {
+  width: 100%;
+  max-width: none;
+}
+
+/* Sessions card specific styling to match mentor card height */
+.sessions-card {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Mentor card specific styling for consistent height */
+.mentor-card {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Feedback card specific styling for consistent height */
+.feedback-card {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
 }
 
 .card__body {
@@ -59,7 +97,7 @@
 
 .card h3 {
   margin-top: 0;
-  color: #fff;
+  color: #000000;
   font-size: 1.2rem;
   margin-bottom: 12px;
 }
@@ -79,23 +117,19 @@
 }
 
 .btn--primary {
-  background: linear-gradient(135deg, #9d3795, #b34caa);
+  background: #6366f1;
   color: white;
 }
 
 .btn--primary:hover {
-  background: linear-gradient(135deg, #8c2a85, #9d3795);
+  background: #5b21b6;
   transform: translateY(-2px);
 }
 
-.btn--outline {
-  background: transparent;
-  color: #9d3795;
-  border: 1px solid #9d3795;
-}
+.btn--outline { background: transparent; color: #6366f1; border: 1px solid #6366f1; }
 
 .btn--outline:hover {
-  background-color: rgba(157, 55, 149, 0.1);
+  background-color: rgba(99, 102, 241, 0.1);
 }
 
 .btn--sm {
@@ -116,7 +150,7 @@
   border-radius: 50%;
   object-fit: cover;
   margin-right: 12px;
-  border: 2px solid #9d3795;
+  border: 2px solid #6366f1;
 }
 
 .mentor-info h3 {
@@ -139,12 +173,12 @@
 
 .rating {
   font-weight: bold;
-  color: #ffc107;
+  color: #6366f1;
   font-size: 1rem;
 }
 
 .stars {
-  color: #ffc107;
+  color: #6366f1;
   font-size: 0.9rem;
 }
 
@@ -162,8 +196,8 @@
 }
 
 .skill-tag {
-  background-color: #333;
-  color: #e6e6e6;
+  background-color: #6366f1;
+  color: #ffffff;
   padding: 4px 8px;
   border-radius: 12px;
   font-size: 11px;
@@ -181,38 +215,54 @@
   overflow-y: auto;
   padding-right: 6px;
   margin-bottom: 8px;
+  max-height: 200px;
 }
 
-/* Scrollbar styling */
-.sessions-scroll-container::-webkit-scrollbar,
+/* Custom scrollbar styling */
+.sessions-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sessions-scroll-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 3px;
+}
+
+.sessions-scroll-container::-webkit-scrollbar-thumb {
+  background: #6366f1;
+  border-radius: 3px;
+}
+
+.sessions-scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #5b21b6;
+}
+
+/* Scrollbar styling for all containers */
 .feedback-scroll-container::-webkit-scrollbar,
 .goals-scroll-container::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 
-.sessions-scroll-container::-webkit-scrollbar-track,
 .feedback-scroll-container::-webkit-scrollbar-track,
 .goals-scroll-container::-webkit-scrollbar-track {
-  background: #1a1a1a;
-  border-radius: 8px;
+  background: #f1f5f9;
+  border-radius: 3px;
 }
 
-.sessions-scroll-container::-webkit-scrollbar-thumb,
 .feedback-scroll-container::-webkit-scrollbar-thumb,
 .goals-scroll-container::-webkit-scrollbar-thumb {
-  background: #9d3795;
-  border-radius: 8px;
+  background: #6366f1;
+  border-radius: 3px;
 }
 
-.sessions-scroll-container::-webkit-scrollbar-thumb:hover,
 .feedback-scroll-container::-webkit-scrollbar-thumb:hover,
 .goals-scroll-container::-webkit-scrollbar-thumb:hover {
-  background: #8c2a85;
+  background: #5b21b6;
 }
 
 .session-item {
-  background-color: #2a2a2a;
-  border: 1px solid #333;
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
   padding: 12px;
   margin-bottom: 12px;
@@ -222,13 +272,13 @@
 }
 
 .session-info h4 {
-  color: #fff;
+  color: #000000;
   margin: 0;
   font-size: 0.95rem;
 }
 
 .session-info p {
-  color: #ccc;
+  color: #374151;
   font-size: 0.8rem;
   margin: 4px 0 0 0;
 }
@@ -240,12 +290,12 @@
 }
 
 .session-time strong {
-  color: #fff;
+  color: #000000;
   font-size: 0.85rem;
 }
 
 .session-time span {
-  color: #ccc;
+  color: #374151;
   font-size: 0.75rem;
 }
 
@@ -262,11 +312,11 @@
 }
 
 .feedback-item {
-  background-color: #2a2a2a;
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 12px;
-  border: 1px solid #333;
+  border: 1px solid #e5e7eb;
 }
 
 .feedback-header {
@@ -277,18 +327,18 @@
 }
 
 .feedback-header strong {
-  color: #fff;
+  color: #000000;
   font-size: 0.85rem;
 }
 
 .feedback-date {
-  color: #ccc;
+  color: #374151;
   font-size: 0.75rem;
 }
 
 .feedback-item p {
   margin: 0 0 8px 0;
-  color: #e6e6e6;
+  color: #000000;
   font-style: italic;
   font-size: 0.8rem;
 }
@@ -309,11 +359,11 @@
 }
 
 .goal-item {
-  background-color: #2a2a2a;
+  background-color: #ffffff;
   border-radius: 8px;
   padding: 12px;
   margin-bottom: 12px;
-  border: 1px solid #333;
+  border: 1px solid #e5e7eb;
 }
 
 .goal-info {
@@ -324,25 +374,25 @@
 }
 
 .goal-info strong {
-  color: #fff;
+  color: #000000;
   font-size: 0.85rem;
 }
 
 .goal-info span {
-  color: #ccc;
+  color: #374151;
   font-size: 0.75rem;
 }
 
 .progress-bar {
   height: 6px;
-  background-color: #333;
+  background-color: #e5e7eb;
   border-radius: 3px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(135deg, #9d3795, #b34caa);
+  background: #6366f1;
   border-radius: 3px;
 }
 

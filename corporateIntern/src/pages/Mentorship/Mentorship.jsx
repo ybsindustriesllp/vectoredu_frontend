@@ -35,7 +35,7 @@ const Mentorship = () => {
         </div>
 
         <div className="mentorship-layout">
-          {/* All cards in a single row-flow container */}
+          {/* First row - 3 cards */}
           <div className="cards-container">
             {/* Mentor Profile */}
             <div className="card mentor-card">
@@ -136,6 +136,106 @@ const Mentorship = () => {
                       </button>
                     </div>
                   </div>
+
+                  <div className="session-item">
+                    <div className="session-info">
+                      <h4>System Design Interview Prep</h4>
+                      <p>With Michael Rodriguez</p>
+                    </div>
+                    <div className="session-time">
+                      <strong>Monday, 3:00 PM</strong>
+                      <span>1.5 hour session</span>
+                    </div>
+                    <div className="session-actions">
+                      <button
+                        className="btn btn--primary btn--sm"
+                        onClick={() => joinSession(3)}
+                      >
+                        Join
+                      </button>
+                      <button
+                        className="btn btn--outline btn--sm"
+                        onClick={() => rescheduleSession(3)}
+                      >
+                        Reschedule
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="session-item">
+                    <div className="session-info">
+                      <h4>React Performance Optimization</h4>
+                      <p>With Dr. Sarah Chen</p>
+                    </div>
+                    <div className="session-time">
+                      <strong>Wednesday, 11:00 AM</strong>
+                      <span>1 hour session</span>
+                    </div>
+                    <div className="session-actions">
+                      <button
+                        className="btn btn--primary btn--sm"
+                        onClick={() => joinSession(4)}
+                      >
+                        Join
+                      </button>
+                      <button
+                        className="btn btn--outline btn--sm"
+                        onClick={() => rescheduleSession(4)}
+                      >
+                        Reschedule
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="session-item">
+                    <div className="session-info">
+                      <h4>Database Design Patterns</h4>
+                      <p>With Lisa Wang</p>
+                    </div>
+                    <div className="session-time">
+                      <strong>Next Friday, 2:30 PM</strong>
+                      <span>1 hour session</span>
+                    </div>
+                    <div className="session-actions">
+                      <button
+                        className="btn btn--primary btn--sm"
+                        onClick={() => joinSession(5)}
+                      >
+                        Join
+                      </button>
+                      <button
+                        className="btn btn--outline btn--sm"
+                        onClick={() => rescheduleSession(5)}
+                      >
+                        Reschedule
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="session-item">
+                    <div className="session-info">
+                      <h4>API Security Best Practices</h4>
+                      <p>With David Thompson</p>
+                    </div>
+                    <div className="session-time">
+                      <strong>Next Monday, 10:00 AM</strong>
+                      <span>45 min session</span>
+                    </div>
+                    <div className="session-actions">
+                      <button
+                        className="btn btn--primary btn--sm"
+                        onClick={() => joinSession(6)}
+                      >
+                        Join
+                      </button>
+                      <button
+                        className="btn btn--outline btn--sm"
+                        onClick={() => rescheduleSession(6)}
+                      >
+                        Reschedule
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -169,7 +269,10 @@ const Mentorship = () => {
                 <button className="btn btn--outline btn--sm">View All Feedback</button>
               </div>
             </div>
+          </div>
 
+          {/* Second row - Learning Goals card aligned left */}
+          <div className="cards-container" style={{gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', justifyItems: 'start'}}>
             {/* Learning Goals */}
             <div className="card goals-card">
               <div className="card__body">

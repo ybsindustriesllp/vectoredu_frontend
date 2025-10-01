@@ -2,31 +2,78 @@
 import React from "react";
 import styles from "./styles.module.css";
 import Navbar from '../../components/Navbar/Navbar.jsx'
-import {
-  FaTasks,
-  FaAward,
-  FaCertificate,
-  FaCode,
-  FaBug,
-  FaMedal,
-} from "react-icons/fa";
+import { FaTasks, FaCertificate, FaCode, FaBug, FaAward, FaMedal } from "react-icons/fa";
 
 export default function Dashboard() {
   return (
     <div>
       <Navbar />
     <div className={styles.dashboard}>
-      <p className={styles.welcome}>
-        Welcome back, Alex! Here's your progress overview.
-      </p>
+      {/* Main Heading */}
+      <h1 className={styles.mainHeading}>Welcome back, Alex! Here's your progress overview.</h1>
+      
+      {/* Tasks first: parallel three-card layout */}
+      <div className={styles.tasksRow}>
+        <div className={styles.card}>
+          <div className={styles.cardTitle}>Tasks</div>
+          <div className={styles.task}>
+            <div>
+              <div className={styles.taskTitle}>Implement user authentication</div>
+              <div className={styles.muted}>Due: Aug 20</div>
+            </div>
+            <span className={`${styles.pill} ${styles.pillRed}`}>In Progress</span>
+          </div>
+          <div className={styles.task}>
+            <div>
+              <div className={styles.taskTitle}>Setup CI/CD pipeline</div>
+              <div className={styles.muted}>Due: Aug 21</div>
+            </div>
+            <span className={`${styles.pill} ${styles.pillRed}`}>In Progress</span>
+          </div>
+          <div className={styles.task}>
+            <div>
+              <div className={styles.taskTitle}>Design course catalog UI</div>
+              <div className={styles.muted}>Queued</div>
+            </div>
+            <span className={`${styles.pill} ${styles.pillGray}`}>To Do</span>
+          </div>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.cardTitle}>Tasks</div>
+          <div className={styles.task}>
+            <div>
+              <div className={styles.taskTitle}>Update documentation</div>
+              <div className={styles.muted}>Due: Aug 22</div>
+            </div>
+            <span className={`${styles.pill} ${styles.pillRed}`}>In Progress</span>
+          </div>
+          <div className={styles.task}>
+            <div>
+              <div className={styles.taskTitle}>Write integration tests</div>
+              <div className={styles.muted}>Queued</div>
+            </div>
+            <span className={`${styles.pill} ${styles.pillGray}`}>To Do</span>
+          </div>
+        </div>
+        <div className={styles.card}>
+          <div className={styles.cardTitle}>Tasks</div>
+          <div className={styles.task}>
+            <div>
+              <div className={styles.taskTitle}>Optimize dashboard performance</div>
+              <div className={styles.muted}>Queued</div>
+            </div>
+            <span className={`${styles.pill} ${styles.pillGray}`}>To Do</span>
+          </div>
+        </div>
+      </div>
 
-      {/* Top Grid */}
+      {/* Top Grid - 3 cards max */}
       <div className={styles.gridTop}>
         {/* Current Progress */}
         <div className={styles.card}>
           <div className={styles.cardTitle}>Current Progress</div>
           <div className={styles.donutWrap}>
-            <div className={styles.donut} style={{ "--p": 75 }}></div>
+            <div className={styles.donut}></div>
             <div className={styles.donutCenter}>75%</div>
           </div>
           <p className={styles.muted}>Sprint 3 - Development Phase</p>
@@ -40,13 +87,16 @@ export default function Dashboard() {
           <div className={styles.cardTitle}>Quick Stats</div>
           <ul className={styles.statList}>
             <li>
-              <FaTasks className={styles.icon} /> 1/4 Tasks Completed
+              <FaTasks className={styles.icon} />
+              <span>1/4 Tasks Completed</span>
             </li>
             <li>
-              <FaAward className={styles.icon} /> 3 Badges Earned
+              <FaAward className={styles.icon} />
+              <span>3 Badges Earned</span>
             </li>
             <li>
-              <FaCertificate className={styles.icon} /> 2 Certificates
+              <FaCertificate className={styles.icon} />
+              <span>2 Certificates</span>
             </li>
           </ul>
         </div>
@@ -67,14 +117,16 @@ export default function Dashboard() {
             View Team
           </button>
         </div>
+      </div>
 
-        {/* Recent Activity */}
+      {/* Second Row - Recent Activity and Analytics Summary side by side */}
+      <div className={styles.gridTop}>
         <div className={styles.card}>
           <div className={styles.cardTitle}>Recent Activity</div>
           <ul className={styles.activity}>
             <li>
               <FaCode className={`${styles.bullet} ${styles.success}`} />
-              <div>
+              <div className={styles.activityContent}>
                 <div className={styles.link}>
                   Completed authentication module
                 </div>
@@ -83,7 +135,7 @@ export default function Dashboard() {
             </li>
             <li>
               <FaBug className={`${styles.bullet} ${styles.warning}`} />
-              <div>
+              <div className={styles.activityContent}>
                 <div className={styles.link}>
                   Bug fixed: Mobile responsive login
                 </div>
@@ -92,7 +144,7 @@ export default function Dashboard() {
             </li>
             <li>
               <FaMedal className={`${styles.bullet} ${styles.violet}`} />
-              <div>
+              <div className={styles.activityContent}>
                 <div className={styles.link}>
                   Earned "Sprint Champion" badge
                 </div>
@@ -101,72 +153,24 @@ export default function Dashboard() {
             </li>
           </ul>
         </div>
-      </div>
-
-      {/* Bottom Grid */}
-      <div className={styles.gridBottom}>
-        {/* Upcoming Tasks */}
         <div className={styles.card}>
-          <div className={styles.cardTitle}>Upcoming Tasks</div>
-          <div className={styles.task}>
-            <div>
-              <div className={styles.taskTitle}>
-                Implement user authentication
-              </div>
-              <div className={styles.muted}>Due: Aug 20</div>
-            </div>
-            <span className={`${styles.pill} ${styles.pillRed}`}>
-              In Progress
-            </span>
-          </div>
-          <div className={styles.task}>
-            <div>
-              <div className={styles.taskTitle}>
-                Design course catalog UI
-              </div>
-              <div className={styles.muted}>Due: Aug 22</div>
-            </div>
-            <span className={`${styles.pill} ${styles.pillGray}`}>To Do</span>
-          </div>
-          <button className={`${styles.btn} ${styles.btnGreen}`}>
-            View All Tasks
-          </button>
-        </div>
-
-        {/* Team Leaderboard */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Team Leaderboard</div>
-          <ul className={styles.leaderboard}>
+          <div className={styles.cardTitle}>Analytics Summary</div>
+          <ul className={styles.statList}>
             <li>
-              <div className={`${styles.rank} ${styles.rank1}`}>1</div>
-              <div className={styles.circleSm}>P</div>
-              <div className={styles.lbName}>Priya Sharma</div>
-              <div className={styles.lbPoints}>2,450 points</div>
-              <div className={styles.lbBadge}>8</div>
+              <FaTasks className={styles.icon} />
+              <span>Task Completion Rate: 85%</span>
             </li>
             <li>
-              <div className={`${styles.rank} ${styles.rank2}`}>2</div>
-              <div className={styles.circleSm}>A</div>
-              <div className={styles.lbName}>Alex Kumar</div>
-              <div className={styles.lbPoints}>2,380 points</div>
-              <div className={styles.lbBadge}>7</div>
+              <FaCode className={styles.icon} />
+              <span>Code Quality Score: 92%</span>
             </li>
             <li>
-              <div className={`${styles.rank} ${styles.rank3}`}>3</div>
-              <div className={styles.circleSm}>M</div>
-              <div className={styles.lbName}>Maya Singh</div>
-              <div className={styles.lbPoints}>2,250 points</div>
-              <div className={styles.lbBadge}>6</div>
-            </li>
-            <li>
-              <div className={styles.rank}>4</div>
-              <div className={styles.circleSm}>R</div>
-              <div className={styles.lbName}>Raj Patel</div>
-              <div className={styles.lbPoints}>2,180 points</div>
-              <div className={styles.lbBadge}>5</div>
+              <FaCertificate className={styles.icon} />
+              <span>Certifications in Progress: 2</span>
             </li>
           </ul>
         </div>
+        <div></div>
       </div>
     </div>
     </div>

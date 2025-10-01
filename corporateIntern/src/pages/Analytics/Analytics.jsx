@@ -81,7 +81,7 @@ const Analytics = () => {
                   <span>75%</span>
                 </div>
                 <div className="skill-bar">
-                  <div className="skill-progress-fill" style={{width: '75%', backgroundColor: '#61DAFB'}}></div>
+                  <div className="skill-progress-fill" style={{width: '75%'}}></div>
                 </div>
               </div>
               <div className="skill-item">
@@ -90,7 +90,7 @@ const Analytics = () => {
                   <span>70%</span>
                 </div>
                 <div className="skill-bar">
-                  <div className="skill-progress-fill" style={{width: '70%', backgroundColor: '#68A063'}}></div>
+                  <div className="skill-progress-fill" style={{width: '70%'}}></div>
                 </div>
               </div>
               <div className="skill-item">
@@ -99,7 +99,7 @@ const Analytics = () => {
                   <span>65%</span>
                 </div>
                 <div className="skill-bar">
-                  <div className="skill-progress-fill" style={{width: '65%', backgroundColor: '#99425B'}}></div>
+                  <div className="skill-progress-fill" style={{width: '65%'}}></div>
                 </div>
               </div>
               <div className="skill-item">
@@ -108,37 +108,13 @@ const Analytics = () => {
                   <span>45%</span>
                 </div>
                 <div className="skill-bar">
-                  <div className="skill-progress-fill" style={{width: '45%', backgroundColor: '#4DB33D'}}></div>
+                  <div className="skill-progress-fill" style={{width: '45%'}}></div>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Achievements Card */}
-          <div className="card achievements-card">
-            <div className="card__body">
-              <h3>Achievements & Badges</h3>
-              <div className="badges-grid">
-                <div className="badge-item">
-                  <FaTrophy className="badge-icon gold" />
-                  <span>Sprint Champion</span>
-                </div>
-                <div className="badge-item">
-                  <FaCode className="badge-icon blue" />
-                  <span>Code Quality</span>
-                </div>
-                <div className="badge-item">
-                  <FaUsers className="badge-icon green" />
-                  <span>Team Player</span>
-                </div>
-                <div className="badge-item locked">
-                  <FaLock className="badge-icon gray" />
-                  <span>Bug Hunter</span>
-                </div>
-              </div>
-              <button className="btn btn--outline btn--sm">View All Achievements</button>
-            </div>
-          </div>
+          {/* Achievements removed per UI spec */}
 
           {/* Activity Timeline Card */}
           <div className="card activity-timeline">
@@ -220,7 +196,7 @@ const Analytics = () => {
               </div>
               <div className="chart-legend">
                 <span className="legend-item">
-                  <div className="legend-color" style={{backgroundColor: '#9d3795'}}></div>
+                  <div className="legend-color"></div>
                   Task Completion
                 </span>
               </div>
