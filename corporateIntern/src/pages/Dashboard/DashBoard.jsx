@@ -1,7 +1,22 @@
-// Dashboard.jsx
-import React from "react";
-import styles from "./styles.module.css";
-import Navbar from '../../components/Navbar/Navbar.jsx'
+import React, { useEffect, useState } from "react";
+import Navbar from "../../components/Navbar/Navbar.jsx";
+import {
+  Box,
+  Card,
+  CardHeader,
+  CardContent,
+  CardActions,
+  Typography,
+  Button,
+  Avatar,
+  Chip,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Alert,
+  Modal,
+} from "@mui/material";
 import {
   FaTasks,
   FaAward,
@@ -10,165 +25,277 @@ import {
   FaBug,
   FaMedal,
 } from "react-icons/fa";
+import CircularProgressGauge from "../../components/Shared/CircularProgressGauge.jsx";
 
 export default function Dashboard() {
+  const [showWelcome, setShowWelcome] = useState(true);
+  const [openTeamModal, setOpenTeamModal] = useState(false);
+
+  useEffect(() => {
+    const isAuth = localStorage.getItem("auth");
+    if (!isAuth) {
+      window.location.href = "/login";
+    }
+  }, []);
+
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div>
+    <Box>
       <Navbar />
-    <div className={styles.dashboard}>
-      <p className={styles.welcome}>
-        Welcome back, Alex! Here's your progress overview.
-      </p>
-
-      {/* Top Grid */}
-      <div className={styles.gridTop}>
-        {/* Current Progress */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Current Progress</div>
-          <div className={styles.donutWrap}>
-            <div className={styles.donut} style={{ "--p": 75 }}></div>
-            <div className={styles.donutCenter}>75%</div>
+      <Box sx={{ p: 2 }}>
+        {showWelcome && (
+          <div style={{ paddingBottom: "1rem" }}>
+            <Alert severity="success">
+              Welcome back, Alex! Here's your progress overview.
+            </Alert>
           </div>
-          <p className={styles.muted}>Sprint 3 - Development Phase</p>
-          <button className={`${styles.btn} ${styles.btnViolet}`}>
-            View Details
-          </button>
-        </div>
+        )}
 
-        {/* Quick Stats */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Quick Stats</div>
-          <ul className={styles.statList}>
-            <li>
-              <FaTasks className={styles.icon} /> 1/4 Tasks Completed
-            </li>
-            <li>
-              <FaAward className={styles.icon} /> 3 Badges Earned
-            </li>
-            <li>
-              <FaCertificate className={styles.icon} /> 2 Certificates
-            </li>
-          </ul>
-        </div>
+        {/* 🧩 Top Section */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            gap: 3,
+            mb: 4,
+          }}
+        >
+          {/* Current Progress */}
+          <Card elevation={4} sx={{ flex: "1 1 0", minWidth: 300 }}>
+            <CardHeader title="Current Progress" />
+            <CardContent>
+              <Box sx={{ textAlign: "center", my: 1 }}>
+                <CircularProgressGauge value={75} color="#f44336" />
+              </Box>
+              <Typography variant="body2" color="text.secondary">
+                Sprint 3 - Development Phase
+              </Typography>
+            </CardContent>
+            <CardActions sx={{ justifyContent: "center", pb: 2 }}>
+              <Button variant="contained" color="secondary">
+                View Details
+              </Button>
+            </CardActions>
+          </Card>
 
-        {/* Team Alpha */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Team Alpha</div>
-          <p className={styles.muted}>E-Learning Platform</p>
-          <div className={styles.avatars}>
-            <div className={`${styles.circle} ${styles.user1}`}>P</div>
-            <div className={`${styles.circle} ${styles.user2}`}>A</div>
-            <div className={`${styles.circle} ${styles.user3}`}>M</div>
-            <div className={`${styles.circle} ${styles.user4}`}>R</div>
-            <div className={styles.more}>+3</div>
-          </div>
-          <p>6 team members</p>
-          <button className={`${styles.btn} ${styles.btnOutline}`}>
-            View Team
-          </button>
-        </div>
+          {/* Quick Stats */}
+          <Card elevation={4} sx={{ flex: "1 1 0", minWidth: 300 }}>
+            <CardHeader title="Quick Stats" />
+            <CardContent>
+              <List>
+                <ListItem>
+                  <ListItemIcon><FaTasks /></ListItemIcon>
+                  <ListItemText primary="11/14 Tasks Completed" />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon><FaAward /></ListItemIcon>
+                  <ListItemText primary="3 Badges Earned" />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon><FaCertificate /></ListItemIcon>
+                  <ListItemText primary="2 Certificates" />
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
 
-        {/* Recent Activity */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Recent Activity</div>
-          <ul className={styles.activity}>
-            <li>
-              <FaCode className={`${styles.bullet} ${styles.success}`} />
-              <div>
-                <div className={styles.link}>
-                  Completed authentication module
-                </div>
-                <div className={styles.time}>2 hours ago</div>
-              </div>
-            </li>
-            <li>
-              <FaBug className={`${styles.bullet} ${styles.warning}`} />
-              <div>
-                <div className={styles.link}>
-                  Bug fixed: Mobile responsive login
-                </div>
-                <div className={styles.time}>Yesterday</div>
-              </div>
-            </li>
-            <li>
-              <FaMedal className={`${styles.bullet} ${styles.violet}`} />
-              <div>
-                <div className={styles.link}>
-                  Earned "Sprint Champion" badge
-                </div>
-                <div className={styles.time}>2 days ago</div>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+          {/* Team Alpha */}
+          <Card elevation={4} sx={{ flex: "1 1 0", minWidth: 300, display: "flex", justifyContent: "space-between", alignItems: "center", flexDirection: "column" }}>
+            <CardHeader title="Team Alpha" subheader="E-Learning Platform" />
+            <CardContent>
+              <Box sx={{ display: "flex", gap: 1, mb: 2 }}>
+                {["P", "A", "M", "R", "D"].map((name, i) => (
+                  <Avatar key={i}>{name}</Avatar>
+                ))}
+                <Chip label="+3" variant="outlined" />
+              </Box>
+              <Typography>6 team members</Typography>
+            </CardContent>
+            <CardActions sx={{ justifyContent: "center", py: 2 }}>
+              <Button variant="outlined" onClick={() => setOpenTeamModal(true)}>
+                View Team
+              </Button>
+            </CardActions>
+          </Card>
+        </Box>
 
-      {/* Bottom Grid */}
-      <div className={styles.gridBottom}>
-        {/* Upcoming Tasks */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Upcoming Tasks</div>
-          <div className={styles.task}>
-            <div>
-              <div className={styles.taskTitle}>
-                Implement user authentication
-              </div>
-              <div className={styles.muted}>Due: Aug 20</div>
-            </div>
-            <span className={`${styles.pill} ${styles.pillRed}`}>
-              In Progress
-            </span>
-          </div>
-          <div className={styles.task}>
-            <div>
-              <div className={styles.taskTitle}>
-                Design course catalog UI
-              </div>
-              <div className={styles.muted}>Due: Aug 22</div>
-            </div>
-            <span className={`${styles.pill} ${styles.pillGray}`}>To Do</span>
-          </div>
-          <button className={`${styles.btn} ${styles.btnGreen}`}>
-            View All Tasks
-          </button>
-        </div>
+        {/* 👥 Team Modal */}
+        <Modal
+          open={openTeamModal}
+          onClose={() => setOpenTeamModal(false)}
+          aria-labelledby="team-modal-title"
+          aria-describedby="team-modal-description"
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 400,
+              bgcolor: "background.paper",
+              borderRadius: 2,
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <Typography id="team-modal-title" variant="h6" component="h2" gutterBottom>
+              Team Alpha
+            </Typography>
+            <Typography id="team-modal-description" sx={{ mb: 2 }}>
+              E-Learning Platform – 6 Members
+            </Typography>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
+              {[
+                "Priya Sharma",
+                "Alex Kumar",
+                "Maya Singh",
+                "Raj Patel",
+                "Deepak Rao",
+                "Anjali Mehta",
+              ].map((name, i) => (
+                <Chip key={i} avatar={<Avatar>{name[0]}</Avatar>} label={name} />
+              ))}
+            </Box>
+            <Box sx={{ textAlign: "right", mt: 3 }}>
+              <Button onClick={() => setOpenTeamModal(false)} variant="contained">
+                Close
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
 
-        {/* Team Leaderboard */}
-        <div className={styles.card}>
-          <div className={styles.cardTitle}>Team Leaderboard</div>
-          <ul className={styles.leaderboard}>
-            <li>
-              <div className={`${styles.rank} ${styles.rank1}`}>1</div>
-              <div className={styles.circleSm}>P</div>
-              <div className={styles.lbName}>Priya Sharma</div>
-              <div className={styles.lbPoints}>2,450 points</div>
-              <div className={styles.lbBadge}>8</div>
-            </li>
-            <li>
-              <div className={`${styles.rank} ${styles.rank2}`}>2</div>
-              <div className={styles.circleSm}>A</div>
-              <div className={styles.lbName}>Alex Kumar</div>
-              <div className={styles.lbPoints}>2,380 points</div>
-              <div className={styles.lbBadge}>7</div>
-            </li>
-            <li>
-              <div className={`${styles.rank} ${styles.rank3}`}>3</div>
-              <div className={styles.circleSm}>M</div>
-              <div className={styles.lbName}>Maya Singh</div>
-              <div className={styles.lbPoints}>2,250 points</div>
-              <div className={styles.lbBadge}>6</div>
-            </li>
-            <li>
-              <div className={styles.rank}>4</div>
-              <div className={styles.circleSm}>R</div>
-              <div className={styles.lbName}>Raj Patel</div>
-              <div className={styles.lbPoints}>2,180 points</div>
-              <div className={styles.lbBadge}>5</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    </div>
-  );
+
+        {/* 📋 Bottom Section */}
+        <Box
+          sx={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            gap: 3,
+          }}
+        >
+          {/* Recent Activity */}
+          <Card elevation={4} sx={{ flex: "1 1 0", minWidth: 300 }}>
+            <CardHeader title="Recent Activity" />
+            <CardContent>
+              <List>
+                <ListItem sx={{ backgroundColor: "#f5f5f5", borderRadius: "1rem" }}>
+                  <ListItemIcon><FaCode color="green" /></ListItemIcon>
+                  <ListItemText
+                    primary="Completed authentication module"
+                    secondary="2 hours ago"
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon><FaBug color="orange" /></ListItemIcon>
+                  <ListItemText
+                    primary="Bug fixed: Mobile responsive login"
+                    secondary="Yesterday"
+                  />
+                </ListItem>
+                <ListItem>
+                  <ListItemIcon><FaMedal color="#673ab7" /></ListItemIcon>
+                  <ListItemText
+                    primary='Earned "Sprint Champion" badge'
+                    secondary="2 days ago"
+                  />
+                </ListItem>
+              </List>
+            </CardContent>
+          </Card>
+
+          {/* Upcoming Tasks */}
+          <Card elevation={4} sx={{ flex: "1 1 0", minWidth: 300 }}>
+            <CardHeader title="Upcoming Tasks" />
+            <CardContent>
+              <Box
+                sx={{
+                  borderLeft: "4px solid #f44336",
+                  backgroundColor: "#fff8f6",
+                  p: 2,
+                  mb: 2,
+                  borderRadius: 1,
+                }}
+              >
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 2 }}>
+                  <Box sx={{ flexGrow: 1, minWidth: 0, textAlign: "left" }}>
+                    <Typography variant="subtitle1" fontWeight="bold" sx={{ wordWrap: "break-word" }}>
+                      Implement user authentication
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Due: Aug 20
+                    </Typography>
+                  </Box>
+                  <Chip label="In Progress" color="error" size="small" sx={{ mt: 0.5 }} />
+                </Box>
+              </Box>
+
+              <Box
+                sx={{
+                  borderLeft: "4px solid #9e9e9e",
+                  backgroundColor: "#f5f5f5",
+                  p: 2,
+                  mb: 2,
+                  borderRadius: 1,
+                }}
+              >
+                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 2 }}>
+                  <Box sx={{ flexGrow: 1, minWidth: 0, textAlign: "left" }}>
+                    <Typography variant="subtitle1" fontWeight="bold" sx={{ wordWrap: "break-word" }}>
+                      Design course catalog UI
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Due: Aug 22
+                    </Typography>
+                  </Box>
+                  <Chip label="To Do" size="small" sx={{ mt: 0.5 }} />
+                </Box>
+              </Box>
+            </CardContent>
+            <CardActions sx={{ justifyContent: "center", pb: 2 }}>
+              <Button variant="contained" color="success">
+                View All Tasks
+              </Button>
+            </CardActions>
+          </Card>
+
+          {/* Team Leaderboard */}
+          <Card elevation={4} sx={{ flex: "1 1 0", minWidth: 300 }}>
+            <CardHeader title="Team Leaderboard" />
+            <CardContent>
+              <List>
+                {[
+                  { name: "Priya Sharma", points: "2,450", badge: 8 },
+                  { name: "Alex Kumar", points: "2,400", badge: 7 },
+                  { name: "Maya Singh", points: "2,250", badge: 6 },
+                  { name: "Raj Patel", points: "2,180", badge: 5 },
+                ].map((user, i) => (
+                  <ListItem key={i} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, backgroundColor: "#f5f5f5", borderRadius: "1rem", mb: 0.3 }}>
+                    <Chip label={i + 1} color={i === 0 ? "primary" : "default"} />
+                    <Avatar>{user.name[0]}</Avatar>
+                    <Box sx={{ flexGrow: 1 }}>
+                      <Typography>{user.name}</Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {user.points} points
+                      </Typography>
+                    </Box>
+                    <Chip label={user.badge} />
+                  </ListItem>
+                ))}
+              </List>
+            </CardContent>
+          </Card>
+        </Box>
+      </Box>
+    </Box>
+  )
 }
