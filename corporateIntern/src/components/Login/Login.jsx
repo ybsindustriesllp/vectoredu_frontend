@@ -1,12 +1,41 @@
 // src/components/Login/Login.jsx
 import React, { useState } from 'react';
-import styles from './styles.module.css';
-import { FaBuilding, FaUserTie, FaCode, FaServer, FaProjectDiagram } from 'react-icons/fa';
+import {
+  Box,
+  Container,
+  Typography,
+  TextField,
+  Button,
+  Tabs,
+  Tab,
+  Checkbox,
+  FormControlLabel,
+  Link,
+  Grid,
+  Card,
+  CardContent,
+  Alert,
+  Modal,
+  Paper,
+  Divider,
+  Avatar,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
+import {
+  Business as BusinessIcon,
+  Code as CodeIcon,
+  Person as PersonIcon,
+  Storage as StorageIcon,
+  AccountTree as ProjectIcon,
+} from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
 import GoogleOAuth from '../GoogleOAuth/GoogleOAuth';
 
 function Login() {
-  const [activeTab, setActiveTab] = useState("signin");
+  const [activeTab, setActiveTab] = useState(0);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -42,17 +71,12 @@ function Login() {
     clearError();
   };
 
-  const handleCheckboxChange = (setter) => (e) => {
-    setter(e.target.checked);
-  };
-
   const handleRegister = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     clearError();
     
     try {
-      // Basic validation
       if (formData.password !== formData.confirm_password) {
         throw new Error('Passwords do not match');
       }
@@ -89,10 +113,9 @@ function Login() {
     try {
       await verifyOTP(otpData.email, otpData.code);
       setShowOtpModal(false);
-      setActiveTab("signin");
+      setActiveTab(0);
       alert('Email verified successfully! Please sign in.');
       
-      // Pre-fill email in login form
       setFormData(prev => ({ ...prev, email: otpData.email }));
     } catch (error) {
       console.error('OTP verification error:', error);
@@ -111,7 +134,6 @@ function Login() {
       console.log('📡 Login: Calling login function from AuthContext...');
       await login(formData.email, formData.password);
       console.log('✅ Login: Login successful, redirecting to dashboard...');
-      // Redirect to dashboard or home page
       window.location.href = '/dashboard';
     } catch (error) {
       console.error('❌ Login: Login failed', error);
@@ -123,7 +145,6 @@ function Login() {
 
   const resendOtp = async () => {
     try {
-      // Implement resend OTP functionality
       console.log('Resending OTP to:', otpData.email);
       alert('OTP has been resent to your email.');
     } catch (error) {
@@ -132,304 +153,393 @@ function Login() {
   };
 
   return (
-    <div className={styles.container}>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       {/* Header Section */}
-      <div className={styles.header}>
-        <div className={styles.topRow}>
-          <FaBuilding className={styles.icon} />
-          <h1 className={styles.title}>CorporateIntern</h1>
-        </div>
-        <div className={styles.bottomRow}>
-          <p className={styles.subtitle}>
+      <Box sx={{ bgcolor: 'white', py: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+            <BusinessIcon sx={{ fontSize: 40, color: 'primary.main' }} />
+            <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
+              CorporateIntern
+            </Typography>
+          </Box>
+          <Typography variant="h6" color="text.secondary">
             Real-World Corporate Experience for Students
-          </p>
-        </div>
-      </div>
+          </Typography>
+        </Container>
+      </Box>
 
-      <hr className={styles.divider} />
+      <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+        <Grid container spacing={4}>
+          {/* Left Side - Features */}
+          <Grid item xs={12} md={6}>
+            <Typography variant="h4" sx={{ fontWeight: 700, mb: 3 }}>
+              Join the Future of Professional Development
+            </Typography>
+            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
+              Experience real-world corporate environments with industry-standard tools,
+              agile methodologies, and expert mentorship from leading MNCs.
+            </Typography>
 
-      <div className={styles.mainContent}>
-        <div className={styles.left}>
-          <h2 className={styles.heading}>Join the Future of Professional Development</h2>
-          <p className={styles.description}>
-            Experience real-world corporate environments with industry-standard tools,
-            agile methodologies, and expert mentorship from leading MNCs.
-          </p>
+            <Grid container spacing={2} sx={{ mb: 4 }}>
+              {[
+                { icon: <CodeIcon />, text: 'Complete SDLC Experience' },
+                { icon: <PersonIcon />, text: 'Industry Mentor Guidance' },
+                { icon: <StorageIcon />, text: 'Virtual Machine Environments' },
+                { icon: <ProjectIcon />, text: 'Agile Project Management' },
+              ].map((feature, index) => (
+                <Grid item xs={12} sm={6} key={index}>
+                  <Card variant="outlined">
+                    <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                      <Box sx={{ color: 'primary.main' }}>{feature.icon}</Box>
+                      <Typography variant="body2">{feature.text}</Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
 
-          <div className={styles.features}>
-            <div className={styles.featureBox}><FaCode /> Complete SDLC Experience</div>
-            <div className={styles.featureBox}><FaUserTie /> Industry Mentor Guidance</div>
-            <div className={styles.featureBox}><FaServer /> Virtual Machine Environments</div>
-            <div className={styles.featureBox}><FaProjectDiagram /> Agile Project Management</div>
-          </div>
+            <Grid container spacing={3} sx={{ mb: 4 }}>
+              {[
+                { value: '2,500+', label: 'Students Trained' },
+                { value: '150+', label: 'Industry Mentors' },
+                { value: '25+', label: 'Partner Companies' },
+              ].map((stat, index) => (
+                <Grid item xs={4} key={index}>
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                    {stat.value}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {stat.label}
+                  </Typography>
+                </Grid>
+              ))}
+            </Grid>
 
-          <div className={styles.stats}>
-            <div><h3>2,500+</h3><p>Students Trained</p></div>
-            <div><h3>150+</h3><p>Industry Mentors</p></div>
-            <div><h3>25+</h3><p>Partner Companies</p></div>
-          </div>
+            <Card sx={{ bgcolor: 'grey.50' }}>
+              <CardContent>
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                  <Avatar src="/profile.jpg" sx={{ width: 56, height: 56 }} />
+                  <Box>
+                    <Typography variant="body2" sx={{ mb: 1 }}>
+                      "This program gave me real-world experience that directly translated to my role at Google."
+                    </Typography>
+                    <Typography variant="caption" sx={{ fontWeight: 600 }}>
+                      Priya Sharma, Software Engineer at Google
+                    </Typography>
+                  </Box>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
 
-          <div className={styles.testimonial}>
-            <img src="/profile.jpg" alt="Priya Sharma" className={styles.avatar} />
-            <p className={styles.quote}>
-              "This program gave me real-world experience that directly translated to my role at Google."
-            </p>
-            <p className={styles.author}>Priya Sharma, Software Engineer at Google</p>
-          </div>
-        </div>
+          {/* Right Side - Login/Signup Form */}
+          <Grid item xs={12} md={6}>
+            <Paper elevation={3} sx={{ p: 4 }}>
+              <Tabs 
+                value={activeTab} 
+                onChange={(e, newValue) => setActiveTab(newValue)}
+                sx={{ mb: 3 }}
+                variant="fullWidth"
+              >
+                <Tab label="Sign In" />
+                <Tab label="Create Account" />
+              </Tabs>
 
-        <div className={styles.right}>
-          <div className={styles.tabs}>
-            <button
-              className={activeTab === "signin" ? styles.activeTab : styles.inactiveTab}
-              onClick={() => setActiveTab("signin")}
-            >
-              Sign In
-            </button>
-            <button
-              className={activeTab === "signup" ? styles.activeTab : styles.inactiveTab}
-              onClick={() => setActiveTab("signup")}
-            >
-              Create Account
-            </button>
-          </div>
+              {error && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                  {error}
+                </Alert>
+              )}
 
-          {error && (
-            <div className={styles.errorMessage}>
-              {error}
-            </div>
-          )}
+              {activeTab === 0 ? (
+                <>
+                  <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+                    Welcome Back
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                    Sign in to continue your professional journey
+                  </Typography>
 
-          {activeTab === "signin" ? (
-            <>
-              <h2 className={styles.formTitle}>Welcome Back</h2>
-              <p className={styles.formSubtitle}>Sign in to continue your professional journey</p>
-
-              <form className={styles.form} onSubmit={handleLogin}>
-                <label>Email Address</label>
-                <input 
-                  type="email" 
-                  name="email"
-                  placeholder="Enter your email" 
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-
-                <label>Password</label>
-                <input 
-                  type="password" 
-                  name="password"
-                  placeholder="Enter your password" 
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-
-                <div className={styles.rememberRow}>
-                  <div>
-                    <input 
-                      type="checkbox" 
-                      checked={rememberMe}
-                      onChange={handleCheckboxChange(setRememberMe)}
+                  <Box component="form" onSubmit={handleLogin}>
+                    <TextField
+                      fullWidth
+                      label="Email Address"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
                       disabled={isLoading}
-                    /> 
-                    <span>Remember me</span>
-                  </div>
-                  <a href="/forgot-password" className={styles.forgot}>Forgot Password?</a>
-                </div>
+                      sx={{ mb: 2 }}
+                    />
 
-                <button 
-                  type="submit" 
-                  className={styles.signInBtn}
-                  disabled={isLoading}
-                >
-                  {isLoading ? 'Signing In...' : 'Sign In'}
-                </button>
-              </form>
-
-              <div className={styles.orLine}>
-                <span></span> or continue with <span></span>
-              </div>
-
-              <GoogleOAuth buttonText="Sign in with Google" />
-            </>
-          ) : (
-            <>
-              <h2 className={styles.formTitle}>Create Your Account</h2>
-              <p className={styles.formSubtitle}>
-                Join thousands of professionals advancing their careers
-              </p>
-
-              <form className={styles.form} onSubmit={handleRegister}>
-                <label>Full Name *</label>
-                <input 
-                  type="text" 
-                  name="full_name"
-                  placeholder="Enter your full name" 
-                  value={formData.full_name}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-
-                <label>Email Address *</label>
-                <input 
-                  type="email" 
-                  name="email"
-                  placeholder="Enter your email address" 
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-
-                <label>Phone Number</label>
-                <input 
-                  type="tel" 
-                  name="phone"
-                  placeholder="+1 (555) 123-4567" 
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  disabled={isLoading}
-                />
-
-                <label>Role *</label>
-                <select 
-                  name="role"
-                  value={formData.role}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                >
-                  <option value="student">Student</option>
-                  <option value="mentor">Mentor</option>
-                  <option value="partner">Partner</option>
-                </select>
-
-                <label>Password *</label>
-                <input 
-                  type="password" 
-                  name="password"
-                  placeholder="Create a strong password" 
-                  value={formData.password}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-
-                <label>Confirm Password *</label>
-                <input 
-                  type="password" 
-                  name="confirm_password"
-                  placeholder="Confirm your password" 
-                  value={formData.confirm_password}
-                  onChange={handleInputChange}
-                  required
-                  disabled={isLoading}
-                />
-
-                <div className={styles.checkRow}>
-                  <input 
-                    type="checkbox" 
-                    checked={agreeTerms}
-                    onChange={handleCheckboxChange(setAgreeTerms)}
-                    required
-                    disabled={isLoading}
-                  /> 
-                  <span>I agree to the Terms of Service and Privacy Policy</span>
-                </div>
-                <div className={styles.checkRow}>
-                  <input 
-                    type="checkbox" 
-                    checked={agreeUpdates}
-                    onChange={handleCheckboxChange(setAgreeUpdates)}
-                    disabled={isLoading}
-                  /> 
-                  <span>I'd like to receive updates about new features and opportunities</span>
-                </div>
-
-                <button 
-                  type="submit" 
-                  className={styles.signInBtn}
-                  disabled={isLoading || !agreeTerms}
-                >
-                  {isLoading ? 'Creating Account...' : 'Create Account'}
-                </button>
-              </form>
-
-              <div className={styles.orLine}>
-                <span></span> or continue with <span></span>
-              </div>
-
-              <GoogleOAuth buttonText="Sign up with Google" />
-            </>
-          )}
-
-          {/* OTP Verification Modal */}
-          {showOtpModal && (
-            <div className={styles.modalOverlay}>
-              <div className={styles.modal}>
-                <h3>Verify Your Email</h3>
-                <p>We've sent a verification code to {otpData.email}</p>
-                
-                <form onSubmit={handleOtpVerification}>
-                  <input
-                    type="text"
-                    name="code"
-                    placeholder="Enter 6-digit OTP"
-                    value={otpData.code}
-                    onChange={handleOtpChange}
-                    maxLength="6"
-                    required
-                    disabled={isLoading}
-                  />
-                  
-                  <div className={styles.modalButtons}>
-                    <button 
-                      type="button" 
-                      onClick={() => setShowOtpModal(false)}
+                    <TextField
+                      fullWidth
+                      label="Password"
+                      name="password"
+                      type="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      required
                       disabled={isLoading}
-                    >
-                      Cancel
-                    </button>
-                    <button 
-                      type="button"
-                      onClick={resendOtp}
+                      sx={{ mb: 2 }}
+                    />
+
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox 
+                            checked={rememberMe}
+                            onChange={(e) => setRememberMe(e.target.checked)}
+                            disabled={isLoading}
+                          />
+                        }
+                        label="Remember me"
+                      />
+                      <Link href="/forgot-password" underline="hover">
+                        Forgot Password?
+                      </Link>
+                    </Box>
+
+                    <Button 
+                      type="submit" 
+                      variant="contained"
+                      fullWidth
+                      size="large"
                       disabled={isLoading}
-                      className={styles.resendBtn}
+                      sx={{ mb: 2 }}
                     >
-                      Resend OTP
-                    </button>
-                    <button 
-                      type="submit"
-                      disabled={isLoading || otpData.code.length !== 6}
+                      {isLoading ? 'Signing In...' : 'Sign In'}
+                    </Button>
+                  </Box>
+
+                  <Divider sx={{ my: 3 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      or continue with
+                    </Typography>
+                  </Divider>
+
+                  <GoogleOAuth buttonText="Sign in with Google" />
+                </>
+              ) : (
+                <>
+                  <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+                    Create Your Account
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                    Join thousands of professionals advancing their careers
+                  </Typography>
+
+                  <Box component="form" onSubmit={handleRegister}>
+                    <TextField
+                      fullWidth
+                      label="Full Name"
+                      name="full_name"
+                      value={formData.full_name}
+                      onChange={handleInputChange}
+                      required
+                      disabled={isLoading}
+                      sx={{ mb: 2 }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      label="Email Address"
+                      name="email"
+                      type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      disabled={isLoading}
+                      sx={{ mb: 2 }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      label="Phone Number"
+                      name="phone"
+                      type="tel"
+                      placeholder="+1 (555) 123-4567"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      disabled={isLoading}
+                      sx={{ mb: 2 }}
+                    />
+
+                    <FormControl fullWidth sx={{ mb: 2 }}>
+                      <InputLabel>Role</InputLabel>
+                      <Select
+                        name="role"
+                        value={formData.role}
+                        onChange={handleInputChange}
+                        label="Role"
+                        required
+                        disabled={isLoading}
+                      >
+                        <MenuItem value="student">Student</MenuItem>
+                        <MenuItem value="mentor">Mentor</MenuItem>
+                        <MenuItem value="partner">Partner</MenuItem>
+                      </Select>
+                    </FormControl>
+
+                    <TextField
+                      fullWidth
+                      label="Password"
+                      name="password"
+                      type="password"
+                      value={formData.password}
+                      onChange={handleInputChange}
+                      required
+                      disabled={isLoading}
+                      sx={{ mb: 2 }}
+                    />
+
+                    <TextField
+                      fullWidth
+                      label="Confirm Password"
+                      name="confirm_password"
+                      type="password"
+                      value={formData.confirm_password}
+                      onChange={handleInputChange}
+                      required
+                      disabled={isLoading}
+                      sx={{ mb: 2 }}
+                    />
+
+                    <FormControlLabel
+                      control={
+                        <Checkbox 
+                          checked={agreeTerms}
+                          onChange={(e) => setAgreeTerms(e.target.checked)}
+                          required
+                          disabled={isLoading}
+                        />
+                      }
+                      label="I agree to the Terms of Service and Privacy Policy"
+                      sx={{ mb: 1 }}
+                    />
+
+                    <FormControlLabel
+                      control={
+                        <Checkbox 
+                          checked={agreeUpdates}
+                          onChange={(e) => setAgreeUpdates(e.target.checked)}
+                          disabled={isLoading}
+                        />
+                      }
+                      label="I'd like to receive updates about new features and opportunities"
+                      sx={{ mb: 3 }}
+                    />
+
+                    <Button 
+                      type="submit" 
+                      variant="contained"
+                      fullWidth
+                      size="large"
+                      disabled={isLoading || !agreeTerms}
+                      sx={{ mb: 2 }}
                     >
-                      {isLoading ? 'Verifying...' : 'Verify'}
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
+                      {isLoading ? 'Creating Account...' : 'Create Account'}
+                    </Button>
+                  </Box>
+
+                  <Divider sx={{ my: 3 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      or continue with
+                    </Typography>
+                  </Divider>
+
+                  <GoogleOAuth buttonText="Sign up with Google" />
+                </>
+              )}
+            </Paper>
+          </Grid>
+        </Grid>
+      </Container>
+
+      {/* OTP Verification Modal */}
+      <Modal
+        open={showOtpModal}
+        onClose={() => !isLoading && setShowOtpModal(false)}
+      >
+        <Paper
+          sx={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 400,
+            p: 4,
+          }}
+        >
+          <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+            Verify Your Email
+          </Typography>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+            We've sent a verification code to {otpData.email}
+          </Typography>
+          
+          <Box component="form" onSubmit={handleOtpVerification}>
+            <TextField
+              fullWidth
+              label="Enter 6-digit OTP"
+              name="code"
+              value={otpData.code}
+              onChange={handleOtpChange}
+              inputProps={{ maxLength: 6 }}
+              required
+              disabled={isLoading}
+              sx={{ mb: 3 }}
+            />
+            
+            <Box sx={{ display: 'flex', gap: 2 }}>
+              <Button 
+                variant="outlined"
+                onClick={() => setShowOtpModal(false)}
+                disabled={isLoading}
+                fullWidth
+              >
+                Cancel
+              </Button>
+              <Button 
+                variant="outlined"
+                onClick={resendOtp}
+                disabled={isLoading}
+                fullWidth
+              >
+                Resend OTP
+              </Button>
+              <Button 
+                type="submit"
+                variant="contained"
+                disabled={isLoading || otpData.code.length !== 6}
+                fullWidth
+              >
+                {isLoading ? 'Verifying...' : 'Verify'}
+              </Button>
+            </Box>
+          </Box>
+        </Paper>
+      </Modal>
 
       {/* Footer */}
-      <footer className={styles.footer}>
-        <div className={styles.footerLeft}>
-          <a href="/support">Support</a>
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms of Service</a>
-          <a href="/contact">Contact Us</a>
-        </div>
-        <div className={styles.footerRight}>
-          <p>© 2025 CorporateIntern. All rights reserved.</p>
-        </div>
-      </footer>
-    </div>
+      <Box sx={{ bgcolor: 'white', py: 3, borderTop: '1px solid', borderColor: 'divider', mt: 4 }}>
+        <Container maxWidth="lg">
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 2 }}>
+            <Box sx={{ display: 'flex', gap: 3 }}>
+              <Link href="/support" underline="hover">Support</Link>
+              <Link href="/privacy" underline="hover">Privacy Policy</Link>
+              <Link href="/terms" underline="hover">Terms of Service</Link>
+              <Link href="/contact" underline="hover">Contact Us</Link>
+            </Box>
+            <Typography variant="body2" color="text.secondary">
+              © 2025 CorporateIntern. All rights reserved.
+            </Typography>
+          </Box>
+        </Container>
+      </Box>
+    </Box>
   );
 }
 

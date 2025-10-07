@@ -1,7 +1,23 @@
 // components/Mentorship/Mentorship.jsx
 import React from 'react';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Avatar,
+  Chip,
+  Rating,
+  LinearProgress,
+} from '@mui/material';
+import {
+  CalendarToday as CalendarIcon,
+  Star as StarIcon,
+} from '@mui/icons-material';
 import Navbar from "../../components/Navbar/Navbar";
-import "./styles.modular.css";
 
 const Mentorship = () => {
   // Functions to handle button clicks
@@ -21,299 +37,207 @@ const Mentorship = () => {
     alert(`Joining session: ${sessionId}`);
   };
 
+  const upcomingSessions = [
+    { id: 1, title: "Code Review & Architecture Discussion", mentor: "Dr. Sarah Chen", time: "Tomorrow, 2:00 PM", duration: "1 hour session" },
+    { id: 2, title: "DevOps Best Practices", mentor: "Rajesh Kumar", time: "Friday, 10:30 AM", duration: "45 min session" },
+    { id: 3, title: "System Design Interview Prep", mentor: "Michael Rodriguez", time: "Monday, 3:00 PM", duration: "1.5 hour session" },
+    { id: 4, title: "React Performance Optimization", mentor: "Dr. Sarah Chen", time: "Wednesday, 11:00 AM", duration: "1 hour session" },
+    { id: 5, title: "Database Design Patterns", mentor: "Lisa Wang", time: "Next Friday, 2:30 PM", duration: "1 hour session" },
+    { id: 6, title: "API Security Best Practices", mentor: "David Thompson", time: "Next Monday, 10:00 AM", duration: "45 min session" },
+  ];
+
   return (
-    <div className="mentorship-container">
+    <Box>
       <Navbar />
-
-      <div className="mentorship-content">
-        <div className="view-header">
-          <h1>Mentorship Program</h1>
-          <button className="btn btn--primary" onClick={scheduleSession}>
-            <i className="fas fa-calendar-plus"></i>
+      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+        {/* Header */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Mentorship Program
+          </Typography>
+          <Button 
+            variant="contained" 
+            startIcon={<CalendarIcon />}
+            onClick={scheduleSession}
+          >
             Schedule Session
-          </button>
-        </div>
+          </Button>
+        </Box>
 
-        <div className="mentorship-layout">
-          {/* First row - 3 cards */}
-          <div className="cards-container">
+        {/* First Row - 3 Cards */}
+        <Grid container spacing={3} sx={{ mb: 3 }}>
             {/* Mentor Profile */}
-            <div className="card mentor-card">
-              <div className="card__body">
-                <div className="mentor-header">
-                  <img
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '300px' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+                  <Avatar 
                     src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face"
-                    alt="Dr. Sarah Chen"
-                    className="mentor-avatar"
+                    sx={{ width: 64, height: 64 }}
                   />
-                  <div className="mentor-info">
-                    <h3>Dr. Sarah Chen</h3>
-                    <p>Senior Software Architect, Google</p>
-                    <div className="mentor-rating">
-                      <span className="rating">4.9</span>
-                      <div className="stars">
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <p className="mentor-stats">
+                  <Box>
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                      Dr. Sarah Chen
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      Senior Software Architect, Google
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 0.5 }}>
+                      <Rating value={4.9} precision={0.1} readOnly size="small" />
+                      <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                        4.9
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
                   12 years experience • 8 mentees • Software Architecture specialist
-                </p>
-                <div className="mentor-skills">
-                  <span className="skill-tag">System Design</span>
-                  <span className="skill-tag">Microservices</span>
-                  <span className="skill-tag">Cloud Architecture</span>
-                </div>
-                <div className="mentor-actions">
-                  <button className="btn btn--outline btn--sm">View Profile</button>
-                  <button
-                    className="btn btn--primary btn--sm"
+                </Typography>
+                <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap', mb: 2 }}>
+                  <Chip label="System Design" size="small" color="primary" />
+                  <Chip label="Microservices" size="small" color="primary" />
+                  <Chip label="Cloud Architecture" size="small" color="primary" />
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <Button variant="outlined" size="small" fullWidth>
+                    View Profile
+                  </Button>
+                  <Button 
+                    variant="contained" 
+                    size="small"
                     onClick={() => scheduleWithMentor('sarah')}
+                    fullWidth
                   >
-                    Schedule Session
-                  </button>
-                </div>
-              </div>
-            </div>
+                    Schedule
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
 
             {/* Upcoming Sessions */}
-            <div className="card sessions-card">
-              <div className="card__body">
-                <h3>Upcoming Sessions</h3>
-                
-                <div className="sessions-scroll-container">
-                  <div className="session-item">
-                    <div className="session-info">
-                      <h4>Code Review & Architecture Discussion</h4>
-                      <p>With Dr. Sarah Chen</p>
-                    </div>
-                    <div className="session-time">
-                      <strong>Tomorrow, 2:00 PM</strong>
-                      <span>1 hour session</span>
-                    </div>
-                    <div className="session-actions">
-                      <button
-                        className="btn btn--primary btn--sm"
-                        onClick={() => joinSession(1)}
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '300px' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Upcoming Sessions
+                </Typography>
+                <Box sx={{ maxHeight: 400, overflow: 'auto' }}>
+                  {upcomingSessions.slice(0, 3).map(session => (
+                    <Card key={session.id} variant="outlined" sx={{ mb: 2 }}>
+                      <CardContent sx={{ p: 2, '&:last-child': { pb: 2 } }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 0.5 }}>
+                          {session.title}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+                          With {session.mentor}
+                        </Typography>
+                        <Typography variant="body2" sx={{ fontWeight: 600, mb: 0.5 }}>
+                          {session.time}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1 }}>
+                          {session.duration}
+                        </Typography>
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                          <Button 
+                            variant="contained" 
+                            size="small"
+                            onClick={() => joinSession(session.id)}
+                            fullWidth
                       >
                         Join
-                      </button>
-                      <button
-                        className="btn btn--outline btn--sm"
-                        onClick={() => rescheduleSession(1)}
+                          </Button>
+                          <Button 
+                            variant="outlined" 
+                            size="small"
+                            onClick={() => rescheduleSession(session.id)}
+                            fullWidth
                       >
                         Reschedule
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="session-item">
-                    <div className="session-info">
-                      <h4>DevOps Best Practices</h4>
-                      <p>With Rajesh Kumar</p>
-                    </div>
-                    <div className="session-time">
-                      <strong>Friday, 10:30 AM</strong>
-                      <span>45 min session</span>
-                    </div>
-                    <div className="session-actions">
-                      <button
-                        className="btn btn--primary btn--sm"
-                        onClick={() => joinSession(2)}
-                      >
-                        Join
-                      </button>
-                      <button
-                        className="btn btn--outline btn--sm"
-                        onClick={() => rescheduleSession(2)}
-                      >
-                        Reschedule
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="session-item">
-                    <div className="session-info">
-                      <h4>System Design Interview Prep</h4>
-                      <p>With Michael Rodriguez</p>
-                    </div>
-                    <div className="session-time">
-                      <strong>Monday, 3:00 PM</strong>
-                      <span>1.5 hour session</span>
-                    </div>
-                    <div className="session-actions">
-                      <button
-                        className="btn btn--primary btn--sm"
-                        onClick={() => joinSession(3)}
-                      >
-                        Join
-                      </button>
-                      <button
-                        className="btn btn--outline btn--sm"
-                        onClick={() => rescheduleSession(3)}
-                      >
-                        Reschedule
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="session-item">
-                    <div className="session-info">
-                      <h4>React Performance Optimization</h4>
-                      <p>With Dr. Sarah Chen</p>
-                    </div>
-                    <div className="session-time">
-                      <strong>Wednesday, 11:00 AM</strong>
-                      <span>1 hour session</span>
-                    </div>
-                    <div className="session-actions">
-                      <button
-                        className="btn btn--primary btn--sm"
-                        onClick={() => joinSession(4)}
-                      >
-                        Join
-                      </button>
-                      <button
-                        className="btn btn--outline btn--sm"
-                        onClick={() => rescheduleSession(4)}
-                      >
-                        Reschedule
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="session-item">
-                    <div className="session-info">
-                      <h4>Database Design Patterns</h4>
-                      <p>With Lisa Wang</p>
-                    </div>
-                    <div className="session-time">
-                      <strong>Next Friday, 2:30 PM</strong>
-                      <span>1 hour session</span>
-                    </div>
-                    <div className="session-actions">
-                      <button
-                        className="btn btn--primary btn--sm"
-                        onClick={() => joinSession(5)}
-                      >
-                        Join
-                      </button>
-                      <button
-                        className="btn btn--outline btn--sm"
-                        onClick={() => rescheduleSession(5)}
-                      >
-                        Reschedule
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="session-item">
-                    <div className="session-info">
-                      <h4>API Security Best Practices</h4>
-                      <p>With David Thompson</p>
-                    </div>
-                    <div className="session-time">
-                      <strong>Next Monday, 10:00 AM</strong>
-                      <span>45 min session</span>
-                    </div>
-                    <div className="session-actions">
-                      <button
-                        className="btn btn--primary btn--sm"
-                        onClick={() => joinSession(6)}
-                      >
-                        Join
-                      </button>
-                      <button
-                        className="btn btn--outline btn--sm"
-                        onClick={() => rescheduleSession(6)}
-                      >
-                        Reschedule
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                          </Button>
+                        </Box>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
 
             {/* Recent Feedback */}
-            <div className="card feedback-card">
-              <div className="card__body">
-                <h3>Recent Feedback</h3>
-                <div className="feedback-scroll-container">
-                  <div className="feedback-item">
-                    <div className="feedback-header">
-                      <strong>Authentication Module Review</strong>
-                      <span className="feedback-date">Aug 15, 2024</span>
-                    </div>
-                    <p>
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '300px' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Recent Feedback
+                </Typography>
+                <Card variant="outlined" sx={{ mb: 2 }}>
+                  <CardContent>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                        Authentication Module Review
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        Aug 15, 2024
+                      </Typography>
+                    </Box>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                       "Excellent implementation of JWT tokens. Consider adding rate
                       limiting for enhanced security."
-                    </p>
-                    <div className="feedback-rating">
-                      <span>Rating: </span>
-                      <div className="stars">
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="far fa-star"></i>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button className="btn btn--outline btn--sm">View All Feedback</button>
-              </div>
-            </div>
-          </div>
+                    </Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="caption">Rating: </Typography>
+                      <Rating value={4} readOnly size="small" />
+                    </Box>
+                  </CardContent>
+                </Card>
+                <Button variant="outlined" size="small" fullWidth>
+                  View All Feedback
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
 
-          {/* Second row - Learning Goals card aligned left */}
-          <div className="cards-container" style={{gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', justifyItems: 'start'}}>
-            {/* Learning Goals */}
-            <div className="card goals-card">
-              <div className="card__body">
-                <h3>Learning Goals</h3>
-                <div className="goals-scroll-container">
-                  <div className="goal-item">
-                    <div className="goal-info">
-                      <strong>Master System Design</strong>
-                      <span>Progress: 65%</span>
-                    </div>
-                    <div className="goal-progress">
-                      <div className="progress-bar">
-                        <div
-                          className="progress-fill"
-                          style={{ width: "65%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="goal-item">
-                    <div className="goal-info">
-                      <strong>Cloud Architecture Certification</strong>
-                      <span>Progress: 45%</span>
-                    </div>
-                    <div className="goal-progress">
-                      <div className="progress-bar">
-                        <div
-                          className="progress-fill"
-                          style={{ width: "45%" }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <button className="btn btn--outline btn--sm">Add New Goal</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+        {/* Second Row - Learning Goals */}
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Card sx={{ height: '300px' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
+                  Learning Goals
+                </Typography>
+                <Box sx={{ mb: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Master System Design
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Progress: 65%
+                    </Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={65} sx={{ height: 8, borderRadius: 1 }} />
+                </Box>
+                <Box sx={{ mb: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      Cloud Architecture Certification
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Progress: 45%
+                    </Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={45} sx={{ height: 8, borderRadius: 1 }} />
+                </Box>
+                <Button variant="outlined" size="small" fullWidth>
+                  Add New Goal
+                </Button>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 

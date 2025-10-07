@@ -1,9 +1,8 @@
 // src/components/GoogleOAuth/GoogleOAuth.jsx
 import React from 'react';
+import { Box } from '@mui/material';
 import { GoogleLogin } from '@react-oauth/google';
 import { useAuth } from '../../contexts/AuthContext';
-import { authAPI, storeTokens } from '../../services/api'; // Add missing imports
-import styles from './styles.module.css';
 
 const GoogleOAuth = ({ buttonText = "Continue with Google", variant = "default" }) => {
   const { googleLogin, error, clearError } = useAuth();
@@ -34,7 +33,7 @@ const GoogleOAuth = ({ buttonText = "Continue with Google", variant = "default" 
   };
 
   return (
-    <div className={styles.googleAuthContainer}>
+    <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
       <GoogleLogin
         onSuccess={handleGoogleSuccess}
         onError={handleGoogleError}
@@ -46,7 +45,7 @@ const GoogleOAuth = ({ buttonText = "Continue with Google", variant = "default" 
         width={variant === "outlined" ? "300" : "350"}
         ux_mode="popup"
       />
-    </div>
+    </Box>
   );
 };
 

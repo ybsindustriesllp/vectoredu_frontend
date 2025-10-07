@@ -1,9 +1,16 @@
 import React from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { FaPowerOff } from 'react-icons/fa';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Paper,
+  Alert,
+} from '@mui/material';
+import { PowerSettingsNew as PowerOffIcon } from '@mui/icons-material';
 import api from '../../services/api';
-import styles from './styles.module.css';
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 function VMInstance() {
   const { sessionId } = useParams();
@@ -34,32 +41,71 @@ function VMInstance() {
 
   if (!guacamole_url) {
     console.error('❌ VMInstance: No VM data provided');
-    return <p>⚠️ No VM data provided. Please launch again.</p>;
+    return (
+      <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Alert severity="warning">
+          ⚠️ No VM data provided. Please launch again.
+        </Alert>
+      </Container>
+    );
   }
 
   return (
-    <div className={styles.vmInstanceContainer}>
-      <div className={styles.header}>
-        <h1>🖥️ VM Session {sessionId}</h1>
-        <p>Started at: {new Date(created_at).toLocaleString()}</p>
-        <button onClick={stopVM} className={styles.actionBtn}>
-          <FaPowerOff /> Stop VM
-        </button>
-      </div>
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      <Paper 
+        elevation={2}
+        sx={{ 
+          p: 3, 
+          mb: 2,
+          borderRadius: 0,
+        }}
+      >
+        <Container maxWidth="xl">
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Box>
+              <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
+                🖥️ VM Session {sessionId}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                Started at: {new Date(created_at).toLocaleString()}
+              </Typography>
+            </Box>
+            <Button 
+              variant="contained" 
+              color="error"
+              startIcon={<PowerOffIcon />}
+              onClick={stopVM}
+            >
+              Stop VM
+            </Button>
+          </Box>
+        </Container>
+      </Paper>
 
-      <div className={styles.sessionFrame}>
-        <iframe
-          src={guacamole_url}
-          width="100%"
-          height="700px"
-          frameBorder="0"
-          title={`VM Session ${sessionId}`}
-          allowFullScreen
-          onLoad={() => console.log('✅ VMInstance: Iframe loaded successfully')}
-          onError={(e) => console.error('❌ VMInstance: Iframe failed to load', e)}
-        />
-      </div>
-    </div>
+      <Container maxWidth="xl">
+        <Paper 
+          elevation={3}
+          sx={{ 
+            width: '100%',
+            height: 'calc(100vh - 180px)',
+            overflow: 'hidden'
+          }}
+        >
+          <Box
+            component="iframe"
+            src={guacamole_url}
+            sx={{
+              width: '100%',
+              height: '100%',
+              border: 'none',
+            }}
+            title={`VM Session ${sessionId}`}
+            onLoad={() => console.log('✅ VMInstance: Iframe loaded successfully')}
+            onError={(e) => console.error('❌ VMInstance: Iframe failed to load', e)}
+          />
+        </Paper>
+      </Container>
+    </Box>
   );
 }
 

@@ -1,5 +1,19 @@
 import React, { useState } from "react";
-import styles from "./styles.module.css";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  TextField,
+  Card,
+  CardContent,
+  MenuItem,
+  Select,
+  FormControl,
+  Chip,
+  InputAdornment,
+} from '@mui/material';
+import { Search as SearchIcon } from '@mui/icons-material';
 import Navbar from "../../components/Navbar/Navbar.jsx";
 
 export default function Tickets() {
@@ -33,7 +47,7 @@ export default function Tickets() {
     },
   ];
 
-  // 🔎 Apply filtering logic
+  // Apply filtering logic
   const filteredTickets = tickets.filter((ticket) => {
     const statusMatch =
       status === "All Tickets" || ticket.status === status;
@@ -49,83 +63,141 @@ export default function Tickets() {
     return statusMatch && priorityMatch && assigneeMatch && searchMatch;
   });
 
+  const getPriorityColor = (priority) => {
+    switch (priority.toLowerCase()) {
+      case 'critical': return 'error';
+      case 'high': return 'error';
+      case 'medium': return 'warning';
+      case 'low': return 'info';
+      default: return 'default';
+    }
+  };
+
   return (
-    <div>
+    <Box>
       <Navbar />
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <h2>Support Tickets</h2>
-          <div className={styles.actions}>
-            <input
-              type="text"
+      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+        {/* Header */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Support Tickets
+          </Typography>
+          
+          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+            <TextField
               placeholder="Search tickets..."
-              className={styles.search}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              size="small"
+              sx={{ width: 300 }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
-            <button className={styles.createBtn}>+ Create Ticket</button>
-          </div>
-        </div>
+            <Button variant="contained" color="primary">
+              + Create Ticket
+            </Button>
+          </Box>
+        </Box>
 
-        <div className={styles.filters}>
-          <select value={status} onChange={(e) => setStatus(e.target.value)}>
-            <option>All Tickets</option>
-            <option>Open</option>
-            <option>In Progress</option>
-            <option>Resolved</option>
-            <option>New</option>
-          </select>
+        {/* Filters */}
+        <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <Select
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <MenuItem value="All Tickets">All Tickets</MenuItem>
+              <MenuItem value="Open">Open</MenuItem>
+              <MenuItem value="In Progress">In Progress</MenuItem>
+              <MenuItem value="Resolved">Resolved</MenuItem>
+              <MenuItem value="New">New</MenuItem>
+            </Select>
+          </FormControl>
 
-          <select value={priority} onChange={(e) => setPriority(e.target.value)}>
-            <option>All Priorities</option>
-            <option>Critical</option>
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <Select
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
+              <MenuItem value="All Priorities">All Priorities</MenuItem>
+              <MenuItem value="Critical">Critical</MenuItem>
+              <MenuItem value="High">High</MenuItem>
+              <MenuItem value="Medium">Medium</MenuItem>
+              <MenuItem value="Low">Low</MenuItem>
+            </Select>
+          </FormControl>
 
-          <select value={assignee} onChange={(e) => setAssignee(e.target.value)}>
-            <option>All Assignees</option>
-            <option>Alex Kumar</option>
-            <option>Priya Sharma</option>
-            <option>Raj Patel</option>
-            <option>Maya Singh</option>
-          </select>
-        </div>
+          <FormControl size="small" sx={{ minWidth: 150 }}>
+            <Select
+              value={assignee}
+              onChange={(e) => setAssignee(e.target.value)}
+            >
+              <MenuItem value="All Assignees">All Assignees</MenuItem>
+              <MenuItem value="Alex Kumar">Alex Kumar</MenuItem>
+              <MenuItem value="Priya Sharma">Priya Sharma</MenuItem>
+              <MenuItem value="Raj Patel">Raj Patel</MenuItem>
+              <MenuItem value="Maya Singh">Maya Singh</MenuItem>
+            </Select>
+          </FormControl>
+        </Box>
 
-        <div className={styles.ticketList}>
+        {/* Ticket List */}
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {filteredTickets.length > 0 ? (
             filteredTickets.map((ticket) => (
-              <div key={ticket.id} className={styles.ticketCard}>
-                <div className={styles.badges}>
-                  <span className={styles.id}>{ticket.id}</span>
-                  <span
-                    className={`${styles.priority} ${
-                      styles[ticket.priority.toLowerCase()]
-                    }`}
-                  >
-                    {ticket.priority.toUpperCase()}
-                  </span>
-                  <span className={styles.status}>
-                    {ticket.status.toUpperCase()}
-                  </span>
-                </div>
+              <Card key={ticket.id}>
+                <CardContent>
+                  <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+                    <Chip 
+                      label={ticket.id} 
+                      size="small" 
+                      variant="outlined"
+                    />
+                    <Chip 
+                      label={ticket.priority.toUpperCase()} 
+                      color={getPriorityColor(ticket.priority)}
+                      size="small"
+                    />
+                    <Chip 
+                      label={ticket.status.toUpperCase()} 
+                      size="small"
+                      variant="outlined"
+                    />
+                  </Box>
 
-                <h3 className={styles.title}>{ticket.title}</h3>
-                <p className={styles.description}>{ticket.description}</p>
+                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                    {ticket.title}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                    {ticket.description}
+                  </Typography>
 
-                <div className={styles.footer}>
-                  <span>Assigned to: {ticket.assigned}</span>
-                  <span>Reported by: {ticket.reported}</span>
-                  <span>Created: {ticket.created}</span>
-                </div>
-              </div>
+                  <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Assigned to: <strong>{ticket.assigned}</strong>
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Reported by: <strong>{ticket.reported}</strong>
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Created: <strong>{ticket.created}</strong>
+                    </Typography>
+                  </Box>
+                </CardContent>
+              </Card>
             ))
           ) : (
-            <p className={styles.noResults}>No tickets found.</p>
+            <Typography variant="body1" color="text.secondary" textAlign="center" sx={{ py: 4 }}>
+              No tickets found.
+            </Typography>
           )}
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Container>
+    </Box>
   );
 }

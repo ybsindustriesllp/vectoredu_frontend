@@ -1,12 +1,27 @@
 import React, { useState } from 'react';
-import styles from './styles.module.css';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Chip,
+  LinearProgress,
+  Alert,
+  Avatar,
+} from '@mui/material';
+import {
+  PlayArrow as PlayIcon,
+  PowerSettingsNew as PowerIcon,
+  Download as DownloadIcon,
+} from '@mui/icons-material';
 import Navbar from '../../components/Navbar/Navbar.jsx';
-import { FaPlay, FaPowerOff } from 'react-icons/fa';
 import Image from './passport.jpg';
 import api from '../../services/api';
 import { useNavigate } from 'react-router-dom';
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL
-
+const API_BASE_URL = process.env.REACT_APP_BACKEND_URL;
 
 function Projects() {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,234 +74,317 @@ function Projects() {
   };
 
   return (
-    <div className={styles.container}>
+    <Box>
       <Navbar />
-      <div className={styles.container1}>
-        <div className={styles.headings}>
-          <h1 className={styles.heading}>Project Management</h1>
-
-          <div className={styles.buttons}>
-            <button className={styles.exportBtn}>
-              ⬇ Export
-            </button>
-            <button className={styles.newTaskBtn}>
+      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+        {/* Header */}
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+          <Typography variant="h4" sx={{ fontWeight: 700 }}>
+            Project Management
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 2 }}>
+            <Button 
+              variant="outlined" 
+              startIcon={<DownloadIcon />}
+            >
+              Export
+            </Button>
+            <Button 
+              variant="contained" 
+              color="primary"
+            >
               + New Task
-            </button>
-          </div>
-        </div>
+            </Button>
+          </Box>
+        </Box>
 
-        <div className={styles.projects}>
-          {/* ---- E-Learning Platform (keep data + wire Launch VM) ---- */}
-          <div className={styles.card}>
-            <div className={styles.cardHeader}>
-              <h2 className={styles.cardTitle}>E-Learning Platform</h2>
-              <span className={`${styles.status} ${styles.running}`}>
-                VM Running
-              </span>
-            </div>
-            <p className={styles.desc}>
-              A comprehensive online learning management system with video
-              streaming, assessments, and progress tracking.
-            </p>
+        {/* Project Cards */}
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          {/* E-Learning Platform */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    E-Learning Platform
+                  </Typography>
+                  <Chip 
+                    label="VM Running" 
+                    color="success" 
+                    size="small"
+                  />
+                </Box>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  A comprehensive online learning management system with video
+                  streaming, assessments, and progress tracking.
+                </Typography>
 
-            <div className={styles.phase}>
-              <span className={`${styles.phaseTag} ${styles.devPhase}`}>
-                Development Phase
-              </span>
-              <span>65% Complete</span>
-              <span>Due: Sept 15, 2024</span>
-            </div>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+                  <Chip label="Development Phase" color="primary" size="small" />
+                  <Typography variant="caption">65% Complete</Typography>
+                  <Typography variant="caption">Due: Sept 15, 2024</Typography>
+                </Box>
 
-            <div className={styles.progressBar}>
-              <div className={styles.progress} style={{ width: "65%" }}></div>
-            </div>
+                <Box sx={{ mb: 2 }}>
+                  <LinearProgress variant="determinate" value={65} sx={{ height: 8, borderRadius: 1 }} />
+                </Box>
 
-            <div className={styles.usage}>
-              <span>CPU: 25.54%</span>
-              <div className={styles.usageBar}>
-                <div className={styles.progress} style={{ width: "25%" }}></div>
-              </div>
-              <span>Memory: 62.17%</span>
-              <div className={styles.usageBar}>
-                <div className={styles.progress} style={{ width: "62%" }}></div>
-              </div>
-              <span>Storage: 35%</span>
-              <div className={styles.usageBar}>
-                <div className={styles.progress} style={{ width: "35%" }}></div>
-              </div>
-            </div>
+                {/* Usage Stats */}
+                <Box sx={{ mb: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="caption">CPU: 25.54%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={25} sx={{ mb: 2, height: 6, borderRadius: 1 }} />
+                  
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="caption">Memory: 62.17%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={62} sx={{ mb: 2, height: 6, borderRadius: 1 }} />
+                  
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="caption">Storage: 35%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={35} sx={{ height: 6, borderRadius: 1 }} />
+                </Box>
 
-            <div className={styles.actions}>
-              <button className={styles.detailsBtn}>View Details</button>
-              <button
-                onClick={launchVM}
-                disabled={isLoading}
-                className={styles.actionBtn}
-              >
-                {isLoading ? '🚀 Launching...' : <><FaPlay /> Launch VM</>}
-              </button>
-            </div>
-          </div>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Button variant="outlined" fullWidth>
+                    View Details
+                  </Button>
+                  <Button
+                    variant="contained"
+                    startIcon={isLoading ? null : <PlayIcon />}
+                    onClick={launchVM}
+                    disabled={isLoading}
+                    fullWidth
+                  >
+                    {isLoading ? '🚀 Launching...' : 'Launch VM'}
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
 
-          {/* ---- Task Management System (keep static as given) ---- */}
-          <div className={styles.card}>
-            <div className={styles.cardHeader}>
-              <h2 className={styles.cardTitle}>Task Management System</h2>
-              <span className={`${styles.status} ${styles.stopped}`}>
-                VM Stopped
-              </span>
-            </div>
-            <p className={styles.desc}>
-              Enterprise-grade task management with team collaboration features.
-            </p>
+          {/* Task Management System */}
+          <Grid item xs={12} md={6}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    Task Management System
+                  </Typography>
+                  <Chip 
+                    label="VM Stopped" 
+                    color="default" 
+                    size="small"
+                  />
+                </Box>
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                  Enterprise-grade task management with team collaboration features.
+                </Typography>
 
-            <div className={styles.phase}>
-              <span className={`${styles.phaseTag} ${styles.testPhase}`}>
-                Testing Phase
-              </span>
-              <span>85% Complete</span>
-              <span>Due: Aug 20, 2024</span>
-            </div>
+                <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', mb: 2 }}>
+                  <Chip label="Testing Phase" color="warning" size="small" />
+                  <Typography variant="caption">85% Complete</Typography>
+                  <Typography variant="caption">Due: Aug 20, 2024</Typography>
+                </Box>
 
-            <div className={styles.progressBar}>
-              <div className={styles.progress} style={{ width: "85%" }}></div>
-            </div>
+                <Box sx={{ mb: 2 }}>
+                  <LinearProgress variant="determinate" value={85} sx={{ height: 8, borderRadius: 1 }} />
+                </Box>
 
-            <div className={styles.usage}>
-              <span>CPU: 0%</span>
-              <div className={styles.usageBar}></div>
-              <span>Memory: 0%</span>
-              <div className={styles.usageBar}></div>
-              <span>Storage: 42%</span>
-              <div className={styles.usageBar}>
-                <div className={styles.progress} style={{ width: "42%" }}></div>
-              </div>
-            </div>
+                {/* Usage Stats */}
+                <Box sx={{ mb: 2 }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="caption">CPU: 0%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={0} sx={{ mb: 2, height: 6, borderRadius: 1 }} />
+                  
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="caption">Memory: 0%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={0} sx={{ mb: 2, height: 6, borderRadius: 1 }} />
+                  
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+                    <Typography variant="caption">Storage: 42%</Typography>
+                  </Box>
+                  <LinearProgress variant="determinate" value={42} sx={{ height: 6, borderRadius: 1 }} />
+                </Box>
 
-            <div className={styles.actions}>
-              <button className={styles.detailsBtn}>View Details</button>
-              <button className={styles.actionBtn}>
-                <FaPowerOff /> Start VM
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+                <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Button variant="outlined" fullWidth>
+                    View Details
+                  </Button>
+                  <Button
+                    variant="contained"
+                    startIcon={<PowerIcon />}
+                    fullWidth
+                  >
+                    Start VM
+                  </Button>
+                </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
 
-      {error && (
-        <div className={styles.errorMessage}>
-          ⚠️ {error}
-        </div>
-      )}
+        {error && (
+          <Alert severity="error" sx={{ mb: 4 }}>
+            ⚠️ {error}
+          </Alert>
+        )}
 
-      <div className={styles.container2}>
-        <div className={styles.cards}>
-          <div className={styles.header}>
-            <h3>To Do</h3>
-            <span className={styles.count}>2</span>
-          </div>
-          <div className={styles.task}>
-            <h3>Design course catalog UI</h3>
-            <p>Create responsive course listing with search and filters</p>
-            <div className={styles.footer}>
-              <span className={styles.sp}>5 SP</span>
-              <img
-                className={styles.avatar}
-                src={Image}
-                alt="User"
-              />
-            </div>
-          </div>
+        {/* Task Board */}
+        <Grid container spacing={3}>
+          {/* To Do */}
+          <Grid item xs={12} sm={6} md={3}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    To Do
+                  </Typography>
+                  <Chip label="2" size="small" />
+                </Box>
 
-          <div className={styles.task}>
-            <h3>Update documentation</h3>
-            <p>Review and update API documentation</p>
-            <div className={styles.footer}>
-              <span className={styles.sp}>3 SP</span>
-              <img
-                className={styles.avatar}
-                src={Image}
-                alt="User"
-              />
-            </div>
-          </div>
-        </div>
+                <Card variant="outlined" sx={{ mb: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                      Design course catalog UI
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                      Create responsive course listing with search and filters
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label="5 SP" size="small" color="primary" />
+                      <Avatar src={Image} sx={{ width: 28, height: 28 }} />
+                    </Box>
+                  </CardContent>
+                </Card>
 
-        <div className={styles.cards}>
-          <div className={styles.header}>
-            <h3>In Progress</h3>
-            <span className={styles.count}>2</span>
-          </div>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                      Update documentation
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                      Review and update API documentation
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label="3 SP" size="small" color="primary" />
+                      <Avatar src={Image} sx={{ width: 28, height: 28 }} />
+                    </Box>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+          </Grid>
 
-          <div className={styles.task}>
-            <h3>Implement user authentication</h3>
-            <p>Create login/signup functionality with JWT tokens</p>
-            <div className={styles.footer}>
-              <span className={styles.sp}>8 SP</span>
-              <img
-                className={styles.avatar}
-                src={Image}
-                alt="User"
-              />
-            </div>
-          </div>
+          {/* In Progress */}
+          <Grid item xs={12} sm={6} md={3}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    In Progress
+                  </Typography>
+                  <Chip label="2" size="small" />
+                </Box>
 
-          <div className={styles.task}>
-            <h3>Setup CI/CD pipeline</h3>
-            <p>Configure automated deployment with Docker</p>
-            <div className={styles.footer}>
-              <span className={styles.sp}>10 SP</span>
-              <img
-                className={styles.avatar}
-                src={Image}
-                alt="User"
-              />
-            </div>
-          </div>
-        </div>
+                <Card variant="outlined" sx={{ mb: 2 }}>
+                  <CardContent>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                      Implement user authentication
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                      Create login/signup functionality with JWT tokens
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label="8 SP" size="small" color="primary" />
+                      <Avatar src={Image} sx={{ width: 28, height: 28 }} />
+                    </Box>
+                  </CardContent>
+                </Card>
 
-        <div className={styles.cards}>
-          <div className={styles.header}>
-            <h3>Review</h3>
-            <span className={styles.count}>1</span>
-          </div>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                      Setup CI/CD pipeline
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                      Configure automated deployment with Docker
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label="10 SP" size="small" color="primary" />
+                      <Avatar src={Image} sx={{ width: 28, height: 28 }} />
+                    </Box>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+          </Grid>
 
-        <div className={styles.task}>
-            <h3>Database schema design</h3>
-            <p>Design optimized database schema for user data</p>
-            <div className={styles.footer}>
-              <span className={styles.sp}>6 SP</span>
-              <img
-                className={styles.avatar}
-                src={Image}
-                alt="User"
-              />
-            </div>
-          </div>
-        </div>
+          {/* Review */}
+          <Grid item xs={12} sm={6} md={3}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    Review
+                  </Typography>
+                  <Chip label="1" size="small" />
+                </Box>
 
-        <div className={styles.cards}>
-          <div className={styles.header}>
-            <h3>Done</h3>
-            <span className={styles.count}>1</span>
-          </div>
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                      Database schema design
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                      Design optimized database schema for user data
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label="6 SP" size="small" color="primary" />
+                      <Avatar src={Image} sx={{ width: 28, height: 28 }} />
+                    </Box>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+          </Grid>
 
-          <div className={styles.task}>
-            <h3>Write API integration tests</h3>
-            <p>Create comprehensive test suite for all API endpoints</p>
-            <div className={styles.footer}>
-              <span className={styles.sp}>6 SP</span>
-              <img
-                className={styles.avatar}
-                src={Image}
-                alt="User"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+          {/* Done */}
+          <Grid item xs={12} sm={6} md={3}>
+            <Card sx={{ height: '100%' }}>
+              <CardContent sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    Done
+                  </Typography>
+                  <Chip label="1" size="small" />
+                </Box>
+
+                <Card variant="outlined">
+                  <CardContent>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                      Write API integration tests
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 2 }}>
+                      Create comprehensive test suite for all API endpoints
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <Chip label="6 SP" size="small" color="primary" />
+                      <Avatar src={Image} sx={{ width: 28, height: 28 }} />
+                    </Box>
+                  </CardContent>
+                </Card>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
 }
 
 export default Projects;

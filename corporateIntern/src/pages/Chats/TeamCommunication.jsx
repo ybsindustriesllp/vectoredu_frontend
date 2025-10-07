@@ -1,7 +1,21 @@
 // components/TeamChat/TeamChat.jsx
 import React, { useState } from 'react';
+import {
+  Box,
+  Paper,
+  Typography,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  TextField,
+  Button,
+  Badge,
+  Avatar,
+  Divider,
+} from '@mui/material';
+import { Send as SendIcon } from '@mui/icons-material';
 import Navbar from "../../components/Navbar/Navbar";
-import './styles.modular.css';
 
 const TeamChat = () => {
   // Sample data for channels and team members
@@ -86,89 +100,201 @@ const TeamChat = () => {
   };
 
   return (
-    <div className="team-chat-container">
+    <Box>
       <Navbar />
-      
-      <div className="chat-app-container">
-        <div className="chat-sidebar">
-          <div className="corporate-header">
-            <h2>#CorporateIntern</h2>
-          </div>
+      <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)' }}>
+        {/* Sidebar */}
+        <Paper 
+          elevation={2}
+          sx={{ 
+            width: 280, 
+            borderRadius: 0,
+            overflow: 'auto',
+            borderRight: '1px solid',
+            borderColor: 'divider'
+          }}
+        >
+          <Box sx={{ p: 2, bgcolor: 'primary.main', color: 'white' }}>
+            <Typography variant="h6" sx={{ fontWeight: 700 }}>
+              #CorporateIntern
+            </Typography>
+          </Box>
           
-          <div className="channels-section">
-            <h3 className="section-title">CHANNELS</h3>
-            {channels.map(channel => (
-              <div 
-                key={channel.id} 
-                className={`channel-item ${activeChat === channel.name ? 'active' : ''}`}
-                onClick={() => handleChatSelect(channel.name)}
-              >
-                #{channel.name}
-                {channel.unread > 0 && <span className="unread-count">{channel.unread}</span>}
-              </div>
-            ))}
-          </div>
-          
-          <div className="members-section">
-            <h3 className="section-title">TEAM MEMBERS</h3>
-            {teamMembers.map(member => (
-              <div 
-                key={member.id} 
-                className={`member-item ${activeChat === member.name ? 'selected' : ''}`}
-                onClick={() => handleChatSelect(member.name)}
-              >
-                <div className={`member-avatar ${member.online ? 'online' : ''}`}></div>
-                <span>{member.name}</span>
-                {member.online && <span className="online-indicator"></span>}
-              </div>
-            ))}
-          </div>
-        </div>
-        
-        <div className="chat-main">
-          <div className="chat-header">
-            <h2>{activeChat.startsWith('#') ? activeChat : `@${activeChat}`}</h2>
-          </div>
-          
-          <div className="messages-container">
+          {/* Channels Section */}
+          <Box sx={{ p: 2 }}>
+            <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.secondary', mb: 1, display: 'block' }}>
+              CHANNELS
+            </Typography>
+            <List disablePadding>
+              {channels.map(channel => (
+                <ListItem key={channel.id} disablePadding>
+                  <ListItemButton
+                    selected={activeChat === channel.name}
+                    onClick={() => handleChatSelect(channel.name)}
+                    sx={{ borderRadius: 1 }}
+                  >
+                    <ListItemText 
+                      primary={`#${channel.name}`}
+                      primaryTypographyProps={{ variant: 'body2' }}
+                    />
+                    {channel.unread > 0 && (
+                      <Badge badgeContent={channel.unread} color="error" />
+                    )}
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+
+          <Divider />
+
+          {/* Team Members Section */}
+          <Box sx={{ p: 2 }}>
+            <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.secondary', mb: 1, display: 'block' }}>
+              TEAM MEMBERS
+            </Typography>
+            <List disablePadding>
+              {teamMembers.map(member => (
+                <ListItem key={member.id} disablePadding>
+                  <ListItemButton
+                    selected={activeChat === member.name}
+                    onClick={() => handleChatSelect(member.name)}
+                    sx={{ borderRadius: 1 }}
+                  >
+                    <Badge
+                      overlap="circular"
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                      variant="dot"
+                      sx={{
+                        '& .MuiBadge-badge': {
+                          backgroundColor: member.online ? 'success.main' : 'grey.400',
+                          width: 10,
+                          height: 10,
+                          borderRadius: '50%',
+                        }
+                      }}
+                    >
+                      <Avatar sx={{ width: 28, height: 28, mr: 1.5, fontSize: '0.875rem' }}>
+                        {member.name.charAt(0)}
+                      </Avatar>
+                    </Badge>
+                    <ListItemText 
+                      primary={member.name}
+                      primaryTypographyProps={{ variant: 'body2' }}
+                    />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+        </Paper>
+
+        {/* Main Chat Area */}
+        <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          {/* Chat Header */}
+          <Paper 
+            elevation={1}
+            sx={{ 
+              p: 2, 
+              borderRadius: 0,
+              borderBottom: '1px solid',
+              borderColor: 'divider'
+            }}
+          >
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              {activeChat.startsWith('#') ? activeChat : `@${activeChat}`}
+            </Typography>
+          </Paper>
+
+          {/* Messages Container */}
+          <Box 
+            sx={{ 
+              flex: 1, 
+              overflow: 'auto', 
+              p: 3,
+              bgcolor: 'background.default'
+            }}
+          >
             {messages.length > 0 ? (
               messages.map((message) => (
-                <div key={message.id} className={`message ${message.isSender ? 'sender' : 'receiver'}`}>
-                  {!message.isSender && (
-                    <div className="message-info">
-                      <span className="sender-name">{message.sender}</span>
-                      <span className="message-time">{message.time}</span>
-                    </div>
-                  )}
-                  <div className="message-content">
-                    {message.content}
-                  </div>
-                </div>
+                <Box 
+                  key={message.id} 
+                  sx={{ 
+                    display: 'flex',
+                    justifyContent: message.isSender ? 'flex-end' : 'flex-start',
+                    mb: 2
+                  }}
+                >
+                  <Paper
+                    elevation={1}
+                    sx={{
+                      p: 2,
+                      maxWidth: '70%',
+                      bgcolor: message.isSender ? 'primary.main' : 'background.paper',
+                      color: message.isSender ? 'white' : 'text.primary'
+                    }}
+                  >
+                    {!message.isSender && (
+                      <Box sx={{ mb: 0.5 }}>
+                        <Typography variant="caption" sx={{ fontWeight: 600, display: 'block' }}>
+                          {message.sender}
+                        </Typography>
+                        <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                          {message.time}
+                        </Typography>
+                      </Box>
+                    )}
+                    <Typography variant="body2">
+                      {message.content}
+                    </Typography>
+                  </Paper>
+                </Box>
               ))
             ) : (
-              <div className="no-messages">
-                No messages yet. Start a conversation!
-              </div>
+              <Box sx={{ textAlign: 'center', py: 4 }}>
+                <Typography variant="body1" color="text.secondary">
+                  No messages yet. Start a conversation!
+                </Typography>
+              </Box>
             )}
-          </div>
-          
-          <div className="message-input-container">
-            <form onSubmit={handleSendMessage} className="message-form">
-              <input
-                type="text"
+          </Box>
+
+          {/* Message Input */}
+          <Paper 
+            elevation={3}
+            sx={{ 
+              p: 2,
+              borderRadius: 0,
+              borderTop: '1px solid',
+              borderColor: 'divider'
+            }}
+          >
+            <Box 
+              component="form" 
+              onSubmit={handleSendMessage}
+              sx={{ display: 'flex', gap: 1 }}
+            >
+              <TextField
+                fullWidth
+                placeholder="Type a message..."
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
-                placeholder="Type a message..."
-                className="message-input"
+                size="small"
+                variant="outlined"
               />
-              <button type="submit" className="send-button">
+              <Button 
+                type="submit" 
+                variant="contained"
+                endIcon={<SendIcon />}
+                sx={{ minWidth: 100 }}
+              >
                 Send
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+              </Button>
+            </Box>
+          </Paper>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
