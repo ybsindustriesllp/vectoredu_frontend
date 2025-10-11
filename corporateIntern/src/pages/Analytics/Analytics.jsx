@@ -16,17 +16,17 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  Chip
 } from '@mui/material';
 import {
   EmojiEvents as TrophyIcon,
   Code as CodeIcon,
   Group as GroupIcon,
-  Lock as LockIcon,
   Assignment as TaskIcon,
   Schedule as ClockIcon,
   Download as DownloadIcon,
 } from '@mui/icons-material';
-import Navbar from "../../components/Navbar/Navbar";
+import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as RTooltip, CartesianGrid, BarChart, Bar } from 'recharts'
 
 const Analytics = () => {
   const [timeRange, setTimeRange] = useState('30');
@@ -35,10 +35,34 @@ const Analytics = () => {
     alert('Exporting analytics data...');
   };
 
+  const kpi = [
+    { label: 'Active Users', value: '1,284', delta: '+8.2%' },
+    { label: 'Tasks Done', value: '324', delta: '+2.1%' },
+    { label: 'Avg. Resolution', value: '72h', delta: '-5.3%' },
+  ]
+
+  const chartData = [
+    { name: 'Jan', value: 45 },
+    { name: 'Feb', value: 52 },
+    { name: 'Mar', value: 61 },
+    { name: 'Apr', value: 58 },
+    { name: 'May', value: 66 },
+    { name: 'Jun', value: 74 },
+    { name: 'Jul', value: 70 },
+    { name: 'Aug', value: 78 },
+  ]
+
+  const barData = [
+    { name: 'Design', done: 85 },
+    { name: 'Frontend', done: 72 },
+    { name: 'Backend', done: 66 },
+    { name: 'Testing', done: 59 },
+    { name: 'Docs', done: 41 },
+  ]
+
   return (
     <Box>
-      <Navbar />
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: 700 }}>
@@ -65,6 +89,23 @@ const Analytics = () => {
             </Button>
           </Box>
         </Box>
+
+        {/* Top KPI cards */}
+        <Grid container spacing={3} sx={{ mb: 1 }}>
+          {kpi.map((item) => (
+            <Grid item xs={12} md={4} key={item.label}>
+              <Card>
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>{item.label}</Typography>
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Typography variant="h4" sx={{ fontWeight: 700 }}>{item.value}</Typography>
+                    <Chip size="small" label={item.delta} color={item.delta.startsWith('+') ? 'success' : 'error'} />
+                  </Box>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
 
         <Grid container spacing={3}>
           {/* Performance Metrics Card */}
@@ -233,76 +274,50 @@ const Analytics = () => {
             </Card>
           </Grid>
 
-          {/* Performance Chart Card */}
-          <Grid item xs={12}>
+          {/* Charts */}
+          <Grid item xs={12} md={8}>
             <Card>
               <CardContent>
                 <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
-                  Performance Chart
+                  Task Completion Trend
                 </Typography>
-                <Box sx={{ display: 'flex', height: 300, gap: 2, alignItems: 'flex-end' }}>
-                  {/* Y-axis */}
-                  <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', height: '100%', pr: 2 }}>
-                    <Typography variant="caption">100%</Typography>
-                    <Typography variant="caption">80%</Typography>
-                    <Typography variant="caption">60%</Typography>
-                    <Typography variant="caption">40%</Typography>
-                    <Typography variant="caption">20%</Typography>
-                    <Typography variant="caption">0%</Typography>
-                  </Box>
-                  
-                  {/* Bars */}
-                  <Box sx={{ display: 'flex', gap: 3, height: '100%', alignItems: 'flex-end', flex: 1, justifyContent: 'space-around' }}>
-                    {[
-                      { value: 85, label: 'Jan' },
-                      { value: 70, label: 'Feb' },
-                      { value: 90, label: 'Mar' },
-                      { value: 65, label: 'Apr' },
-                      { value: 80, label: 'May' },
-                      { value: 95, label: 'Jun' },
-                      { value: 75, label: 'Jul' },
-                      { value: 85, label: 'Aug' },
-                    ].map((bar, index) => (
-                      <Box 
-                        key={index}
-                        sx={{ 
-                          display: 'flex', 
-                          flexDirection: 'column', 
-                          alignItems: 'center',
-                          height: '100%',
-                          flex: 1,
-                          maxWidth: 60
-                        }}
-                      >
-                        <Box sx={{ flex: 1, display: 'flex', alignItems: 'flex-end', width: '100%' }}>
-                          <Box 
-                            sx={{ 
-                              width: '100%',
-                              height: `${bar.value}%`,
-                              bgcolor: 'primary.main',
-                              borderRadius: '4px 4px 0 0',
-                              display: 'flex',
-                              justifyContent: 'center',
-                              pt: 1
-                            }}
-                          >
-                            <Typography variant="caption" sx={{ fontWeight: 600, color: 'white' }}>
-                              {bar.value}%
-                            </Typography>
-                          </Box>
-                        </Box>
-                        <Typography variant="caption" sx={{ mt: 1, fontWeight: 600 }}>
-                          {bar.label}
-                        </Typography>
-                      </Box>
-                    ))}
-                  </Box>
+                <Box sx={{ height: 320 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={chartData} margin={{ left: 8, right: 8, top: 10, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#6366f1" stopOpacity={0.35}/>
+                          <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="name" />
+                      <YAxis />
+                      <RTooltip />
+                      <Area type="monotone" dataKey="value" stroke="#6366f1" fill="url(#colorPrimary)" strokeWidth={2} />
+                    </AreaChart>
+                  </ResponsiveContainer>
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <Box sx={{ width: 16, height: 16, bgcolor: 'primary.main', borderRadius: 1 }} />
-                    <Typography variant="caption">Task Completion</Typography>
-                  </Box>
+              </CardContent>
+            </Card>
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" sx={{ mb: 3, fontWeight: 600 }}>
+                  Track Progress by Area
+                </Typography>
+                <Box sx={{ height: 320 }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={barData} layout="vertical" margin={{ left: 16, right: 16 }}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis type="number" domain={[0, 100]} hide />
+                      <YAxis type="category" dataKey="name" width={80} />
+                      <RTooltip />
+                      <Bar dataKey="done" fill="#8b5cf6" radius={[4, 4, 4, 4]} />
+                    </BarChart>
+                  </ResponsiveContainer>
                 </Box>
               </CardContent>
             </Card>

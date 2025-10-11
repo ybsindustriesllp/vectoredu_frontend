@@ -15,7 +15,6 @@ import {
   Divider,
 } from '@mui/material';
 import { Send as SendIcon } from '@mui/icons-material';
-import Navbar from "../../components/Navbar/Navbar";
 
 const TeamChat = () => {
   // Sample data for channels and team members
@@ -101,8 +100,7 @@ const TeamChat = () => {
 
   return (
     <Box>
-      <Navbar />
-      <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)' }}>
+      <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)', p: 0 }}>
         {/* Sidebar */}
         <Paper 
           elevation={2}

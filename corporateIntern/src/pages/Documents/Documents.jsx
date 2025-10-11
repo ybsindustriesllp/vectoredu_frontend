@@ -18,7 +18,6 @@ import {
   BugReport as BugIcon,
   Checklist as ChecklistIcon,
 } from '@mui/icons-material';
-import Navbar from '../../components/Navbar/Navbar.jsx';
 
 function Documents() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,9 +62,8 @@ function Documents() {
   );
 
   return (
-    <Box>
-      <Navbar />
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+  <Box>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: 700 }}>

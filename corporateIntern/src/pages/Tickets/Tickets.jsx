@@ -14,7 +14,6 @@ import {
   InputAdornment,
 } from '@mui/material';
 import { Search as SearchIcon } from '@mui/icons-material';
-import Navbar from "../../components/Navbar/Navbar.jsx";
 
 export default function Tickets() {
   const [status, setStatus] = useState("All Tickets");
@@ -75,8 +74,7 @@ export default function Tickets() {
 
   return (
     <Box>
-      <Navbar />
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: 700 }}>

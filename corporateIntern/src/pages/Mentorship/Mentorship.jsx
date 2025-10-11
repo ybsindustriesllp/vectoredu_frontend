@@ -17,7 +17,6 @@ import {
   CalendarToday as CalendarIcon,
   Star as StarIcon,
 } from '@mui/icons-material';
-import Navbar from "../../components/Navbar/Navbar";
 
 const Mentorship = () => {
   // Functions to handle button clicks
@@ -48,8 +47,7 @@ const Mentorship = () => {
 
   return (
     <Box>
-      <Navbar />
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
         {/* Header */}
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h4" sx={{ fontWeight: 700 }}>

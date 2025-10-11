@@ -26,13 +26,12 @@ import {
   WorkspacePremium as MedalIcon,
   CardGiftcard as CertificateIcon,
 } from '@mui/icons-material';
-import Navbar from '../../components/Navbar/Navbar.jsx';
+// Layout now provided by DashboardLayout. Remove local Navbar usage.
 
 export default function Dashboard() {
   return (
     <Box>
-      <Navbar />
-      <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
+      <Container maxWidth="xl" sx={{ p: 3 }}>
       {/* Main Heading */}
         <Typography variant="h4" sx={{ mb: 4, fontWeight: 700 }}>
           Welcome back, Alex! Here's your progress overview.
