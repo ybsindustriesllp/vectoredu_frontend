@@ -26,9 +26,12 @@ import {
   WorkspacePremium as MedalIcon,
   CardGiftcard as CertificateIcon,
 } from '@mui/icons-material';
+import { useTheme } from '@mui/material/styles';
 // Layout now provided by DashboardLayout. Remove local Navbar usage.
 
 export default function Dashboard() {
+  const theme = useTheme();
+  
   return (
     <Box>
       <Container maxWidth="xl" sx={{ p: 3 }}>
@@ -151,7 +154,7 @@ export default function Dashboard() {
                       <Typography variant="body1" sx={{ fontWeight: 600 }}>
                         Write integration tests
                       </Typography>
-                      <Typography variant="caption" color="text.secondary">
+                      <Typography variant="caption" color="primary">
                         Queued
                       </Typography>
                     </Box>
@@ -209,7 +212,7 @@ export default function Dashboard() {
                       value={75} 
                       size={140}
                       thickness={6}
-                      sx={{ color: 'secondary.main' }}
+                      sx={{ color: theme.palette.primary.main }}
                     />
                     <Box
                       sx={{
@@ -223,16 +226,16 @@ export default function Dashboard() {
                         justifyContent: 'center',
                       }}
                     >
-                      <Typography variant="h3" component="div" sx={{ fontWeight: 700, color: 'text.primary' }}>
+                      <Typography variant="h4" component="div" sx={{ fontWeight: 700, color: 'text.primary' }}>
                         75%
                       </Typography>
                     </Box>
                   </Box>
-                  <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
+                  <Typography variant="body2" color="primary" sx={{ mb: 3 }}>
                     Sprint 3 - Development Phase
                   </Typography>
                 </Box>
-                <Button variant="contained" color="secondary" fullWidth>
+                <Button variant="contained" fullWidth>
                   View Details
                 </Button>
               </CardContent>
@@ -281,10 +284,10 @@ export default function Dashboard() {
                   E-Learning Platform
                 </Typography>
                 <AvatarGroup max={4} sx={{ mb: 2, justifyContent: 'flex-start' }}>
-                  <Avatar sx={{ bgcolor: '#6366f1', width: 36, height: 36 }}>P</Avatar>
-                  <Avatar sx={{ bgcolor: '#8b5cf6', width: 36, height: 36 }}>A</Avatar>
-                  <Avatar sx={{ bgcolor: '#10b981', width: 36, height: 36 }}>M</Avatar>
-                  <Avatar sx={{ bgcolor: '#f59e0b', width: 36, height: 36 }}>R</Avatar>
+                  <Avatar sx={{ bgcolor: theme.palette.primary.main, width: 36, height: 36 }}>P</Avatar>
+                  <Avatar sx={{ bgcolor: theme.palette.secondary.main, width: 36, height: 36 }}>A</Avatar>
+                  <Avatar sx={{ bgcolor: theme.palette.success.main, width: 36, height: 36 }}>M</Avatar>
+                  <Avatar sx={{ bgcolor: theme.palette.warning.main, width: 36, height: 36 }}>R</Avatar>
                   <Avatar sx={{ width: 36, height: 36 }}>+3</Avatar>
                 </AvatarGroup>
                 <Typography variant="body2" sx={{ mb: 2 }}>

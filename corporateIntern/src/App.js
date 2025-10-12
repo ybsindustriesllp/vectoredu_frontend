@@ -19,11 +19,6 @@ import DashboardLayout from './components/Layout/DashboardLayout.jsx';
 // Simplified MUI theme matching Mira analytics
 const theme = createTheme({
   palette: {
-    primary: { main: '#6366F1' },
-    secondary: { main: '#8B5CF6' },
-    success: { main: '#10B981' },
-    warning: { main: '#F59E0B' },
-    error: { main: '#EF4444' },
     background: {
       default: '#F8FAFC',
       paper: '#FFFFFF'

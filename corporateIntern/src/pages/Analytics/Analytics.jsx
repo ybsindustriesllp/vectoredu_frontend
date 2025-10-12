@@ -26,10 +26,12 @@ import {
   Schedule as ClockIcon,
   Download as DownloadIcon,
 } from '@mui/icons-material';
+import { useTheme } from '@mui/material/styles';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as RTooltip, CartesianGrid, BarChart, Bar } from 'recharts'
 
 const Analytics = () => {
   const [timeRange, setTimeRange] = useState('30');
+  const theme = useTheme();
 
   const exportAnalytics = () => {
     alert('Exporting analytics data...');
@@ -173,28 +175,28 @@ const Analytics = () => {
                       <Typography variant="body2">React</Typography>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>75%</Typography>
                     </Box>
-                    <LinearProgress variant="determinate" value={75} sx={{ height: 8, borderRadius: 1 }} />
+                    <LinearProgress variant="determinate" value={75} sx={{ height: 8, borderRadius: 1, '& .MuiLinearProgress-bar': { backgroundColor: theme.palette.primary.main } }} />
                   </Box>
                   <Box sx={{ mb: 2 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                       <Typography variant="body2">Node.js</Typography>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>70%</Typography>
                     </Box>
-                    <LinearProgress variant="determinate" value={70} sx={{ height: 8, borderRadius: 1 }} />
+                    <LinearProgress variant="determinate" value={70} sx={{ height: 8, borderRadius: 1, '& .MuiLinearProgress-bar': { backgroundColor: theme.palette.primary.main } }} />
                   </Box>
                   <Box sx={{ mb: 2 }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                       <Typography variant="body2">Testing (Jest)</Typography>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>65%</Typography>
                     </Box>
-                    <LinearProgress variant="determinate" value={65} sx={{ height: 8, borderRadius: 1 }} />
+                    <LinearProgress variant="determinate" value={65} sx={{ height: 8, borderRadius: 1, '& .MuiLinearProgress-bar': { backgroundColor: theme.palette.primary.main } }} />
                   </Box>
                   <Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
                       <Typography variant="body2">MongoDB</Typography>
                       <Typography variant="body2" sx={{ fontWeight: 600 }}>45%</Typography>
                     </Box>
-                    <LinearProgress variant="determinate" value={45} sx={{ height: 8, borderRadius: 1 }} />
+                    <LinearProgress variant="determinate" value={45} sx={{ height: 8, borderRadius: 1, '& .MuiLinearProgress-bar': { backgroundColor: theme.palette.primary.main } }} />
                   </Box>
                 </Box>
               </CardContent>
@@ -286,15 +288,15 @@ const Analytics = () => {
                     <AreaChart data={chartData} margin={{ left: 8, right: 8, top: 10, bottom: 0 }}>
                       <defs>
                         <linearGradient id="colorPrimary" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#6366f1" stopOpacity={0.35}/>
-                          <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
+                          <stop offset="5%" stopColor={theme.palette.primary.main} stopOpacity={0.35}/>
+                          <stop offset="95%" stopColor={theme.palette.primary.main} stopOpacity={0}/>
                         </linearGradient>
                       </defs>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis dataKey="name" />
                       <YAxis />
                       <RTooltip />
-                      <Area type="monotone" dataKey="value" stroke="#6366f1" fill="url(#colorPrimary)" strokeWidth={2} />
+                      <Area type="monotone" dataKey="value" stroke={theme.palette.primary.main} fill="url(#colorPrimary)" strokeWidth={2} />
                     </AreaChart>
                   </ResponsiveContainer>
                 </Box>
@@ -315,7 +317,7 @@ const Analytics = () => {
                       <XAxis type="number" domain={[0, 100]} hide />
                       <YAxis type="category" dataKey="name" width={80} />
                       <RTooltip />
-                      <Bar dataKey="done" fill="#8b5cf6" radius={[4, 4, 4, 4]} />
+                      <Bar dataKey="done" fill={theme.palette.primary.main} radius={[4, 4, 4, 4]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </Box>
